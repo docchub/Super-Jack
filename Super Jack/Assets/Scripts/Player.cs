@@ -124,13 +124,16 @@ public class Player : MonoBehaviour
             if (context.canceled)
             {
                 // Stop firing
-                Debug.Log("attempted to stop firing");
                 rapidFire = false;
                 StopCoroutine(RapidFire());
             }
         }
     }
 
+    /// <summary>
+    /// Reference to the player bullets
+    /// </summary>
+    /// <returns></returns>
     public List<GameObject> GetPlayerBullets()
     {
         if (bullets != null && bullets.Count > 0)
@@ -143,6 +146,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Prevent button mashing to fire faster
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Reload()
     {
         reloading = true;
@@ -150,9 +157,12 @@ public class Player : MonoBehaviour
         reloading = false;
     }
 
+    /// <summary>
+    /// Fire bullets in succession while holding the fire button
+    /// </summary>
+    /// <returns></returns>
     IEnumerator RapidFire()
     {
-        Debug.Log("started coroutine");
         while (rapidFire)
         {
             bullets.Add(Instantiate(bullet, transform.position, Quaternion.identity, transform));

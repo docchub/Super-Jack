@@ -15,7 +15,7 @@ public class PlayerBullet : MonoBehaviour
     void Start()
     {
         bulletPosition = transform.position;
-        direction = new Vector2(1,0);
+        direction = new Vector2(-1,0);
     }
 
     // Update is called once per frame
