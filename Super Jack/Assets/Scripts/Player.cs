@@ -3,8 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+enum SuperJack
+{
+    FaceUp,
+    FaceDown,
+    FaceLeft,
+    FaceRight
+}
+
 public class Player : MonoBehaviour
 {
+    public Animator animator;
+
+    SuperJack currentState;
+
     [SerializeField]
     float speed = 5f;
     public int health;
@@ -13,7 +25,7 @@ public class Player : MonoBehaviour
     GameObject bullet;
     List<GameObject> bullets = new List<GameObject>();
 
-    public Vector3 playerPos = Vector3.zero;
+    Vector3 playerPos = Vector3.zero;
     Vector3 direction = Vector3.zero;
     Vector3 velocity = Vector3.zero;
 
@@ -21,15 +33,19 @@ public class Player : MonoBehaviour
     float fireRate = 1f;
     bool rapidFire;
     bool reloading;
+    Quaternion bulletRotation = Quaternion.identity;
 
-    const float screenWidth = 5f;
-    const float screenHeight = 5f;
+    float screenHeight;
+    float screenWidth;
 
     //const float hitStateLength = 0.2f;
 
     // Start is called before the first frame update
     void Start()
     {
+        screenHeight = Camera.main.orthographicSize;
+        screenWidth = Camera.main.aspect * screenHeight;
+
         playerPos = transform.position;
         rapidFire = false;
         reloading = false;
@@ -38,6 +54,25 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Enum control
+        if (direction.y == 1)
+        {
+            currentState = SuperJack.FaceUp;
+        }
+        else if (direction.y == -1)
+        {
+            currentState = SuperJack.FaceDown;
+        }
+        else if (direction.x == -1)
+        {
+            currentState = SuperJack.FaceLeft;
+        }
+        else if (direction.x == 1)
+        {
+            currentState= SuperJack.FaceRight;
+        }
+
+        // Movement Logic
         if (health > 0)
         {
             // Update veloctity
@@ -88,7 +123,6 @@ public class Player : MonoBehaviour
         else
         {
             StopAllCoroutines();
-            this.GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
 
@@ -99,6 +133,13 @@ public class Player : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         direction = context.ReadValue<Vector2>();
+
+        // If speed = 0 --> idle
+        animator.SetFloat("Speed", 1f);
+        if (context.canceled)
+        {
+            animator.SetFloat("Speed", 0f);
+        }
     }
 
     /// <summary>
@@ -165,7 +206,8 @@ public class Player : MonoBehaviour
     {
         while (rapidFire)
         {
-            bullets.Add(Instantiate(bullet, transform.position, Quaternion.identity, transform));
+            bulletRotation = Quaternion.LookRotation(Vector3.forward, velocity);
+            bullets.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
             yield return new WaitForSeconds(fireRate);
         }
     }

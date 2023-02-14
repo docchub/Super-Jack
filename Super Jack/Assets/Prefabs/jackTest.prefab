@@ -98,11 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61531b82eb54f7c41a35c04eb20d80a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  animator: {fileID: 0}
+  speed: 2
   health: 3
   bullet: {fileID: 2081896381821467233, guid: ed019270bd969944aa8d400f36cc85ee, type: 3}
-  playerPos: {x: 0, y: 0, z: 0}
-  fireRate: 0.5
+  fireRate: 0.7
 --- !u!114 &2273634604318237804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,19 +120,7 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2273634604318237803}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []
