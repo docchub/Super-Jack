@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
     float screenHeight;
     float screenWidth;
 
+    SpriteRenderer spriteRenderer;
+
     //const float hitStateLength = 0.2f;
 
     // Start is called before the first frame update
@@ -49,6 +51,8 @@ public class Player : MonoBehaviour
         playerPos = transform.position;
         rapidFire = false;
         reloading = false;
+
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -88,10 +92,15 @@ public class Player : MonoBehaviour
         {
             animator.SetInteger("WalkType", 1);
         }
-        else if (currentState == SuperJack.FaceLeft ||
-                 currentState == SuperJack.FaceRight)
+        else if (currentState == SuperJack.FaceLeft)
         {
             animator.SetInteger("WalkType", 0);
+            spriteRenderer.flipX = false;
+        }
+        else if (currentState == SuperJack.FaceRight)
+        {
+            animator.SetInteger("WalkType", 0);
+            spriteRenderer.flipX = true;
         }
 
         // Movement Logic
@@ -173,6 +182,8 @@ public class Player : MonoBehaviour
         {
             if (context.performed && !reloading)
             {
+                animator.SetBool("Firing", true);
+
                 // Start firing
                 rapidFire = true;
                 StartCoroutine(RapidFire());
@@ -184,6 +195,8 @@ public class Player : MonoBehaviour
 
             if (context.canceled)
             {
+                animator.SetBool("Firing", false);
+
                 // Stop firing
                 rapidFire = false;
                 StopCoroutine(RapidFire());
