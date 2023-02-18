@@ -58,18 +58,40 @@ public class Player : MonoBehaviour
         if (direction.y == 1)
         {
             currentState = SuperJack.FaceUp;
+            SetBulletDirection(new Vector2(0,1));
         }
         else if (direction.y == -1)
         {
             currentState = SuperJack.FaceDown;
+            SetBulletDirection(new Vector2(0, -1));
         }
         else if (direction.x == -1)
         {
             currentState = SuperJack.FaceLeft;
+            SetBulletDirection(new Vector2(-1, 0));
         }
         else if (direction.x == 1)
         {
-            currentState= SuperJack.FaceRight;
+            currentState = SuperJack.FaceRight;
+            SetBulletDirection(new Vector2(1, 0));
+        }
+
+        // Animation state logic
+        // 0 = Left/Right
+        // 1 = Down
+        // 2 = Up
+        if (currentState == SuperJack.FaceUp)
+        {
+            animator.SetInteger("WalkType", 2);
+        }
+        else if (currentState == SuperJack.FaceDown)
+        {
+            animator.SetInteger("WalkType", 1);
+        }
+        else if (currentState == SuperJack.FaceLeft ||
+                 currentState == SuperJack.FaceRight)
+        {
+            animator.SetInteger("WalkType", 0);
         }
 
         // Movement Logic
@@ -151,8 +173,6 @@ public class Player : MonoBehaviour
         {
             if (context.performed && !reloading)
             {
-                StopCoroutine(Reload());
-
                 // Start firing
                 rapidFire = true;
                 StartCoroutine(RapidFire());
@@ -167,6 +187,7 @@ public class Player : MonoBehaviour
                 // Stop firing
                 rapidFire = false;
                 StopCoroutine(RapidFire());
+                StopCoroutine(Reload());
             }
         }
     }
@@ -206,9 +227,13 @@ public class Player : MonoBehaviour
     {
         while (rapidFire)
         {
-            bulletRotation = Quaternion.LookRotation(Vector3.forward, velocity);
             bullets.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
             yield return new WaitForSeconds(fireRate);
         }
+    }
+
+    void SetBulletDirection(Vector2 vector)
+    {
+        bulletRotation = Quaternion.LookRotation(Vector3.forward, vector);
     }
 }
