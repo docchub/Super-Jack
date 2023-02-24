@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 enum SuperJack
 {
@@ -11,23 +12,15 @@ enum SuperJack
     FaceRight
 }
 
-public class Player : MonoBehaviour
+public class Player : Agent
 {
     public Animator animator;
 
     SuperJack currentState;
 
     [SerializeField]
-    float speed = 5f;
-    public int health;
-
-    [SerializeField]
     GameObject bullet;
     List<GameObject> bullets = new List<GameObject>();
-
-    Vector3 playerPos = Vector3.zero;
-    Vector3 direction = Vector3.zero;
-    Vector3 velocity = Vector3.zero;
 
     [SerializeField]
     float fireRate = 1f;
@@ -35,20 +28,11 @@ public class Player : MonoBehaviour
     bool reloading;
     Quaternion bulletRotation = Quaternion.identity;
 
-    float screenHeight;
-    float screenWidth;
-
     SpriteRenderer spriteRenderer;
-
-    //const float hitStateLength = 0.2f;
 
     // Start is called before the first frame update
     void Start()
     {
-        screenHeight = Camera.main.orthographicSize;
-        screenWidth = Camera.main.aspect * screenHeight;
-
-        playerPos = transform.position;
         rapidFire = false;
         reloading = false;
 
@@ -58,100 +42,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Enum control
-        if (direction.y == 1)
-        {
-            currentState = SuperJack.FaceUp;
-            SetBulletDirection(new Vector2(0,1));
-        }
-        else if (direction.y == -1)
-        {
-            currentState = SuperJack.FaceDown;
-            SetBulletDirection(new Vector2(0, -1));
-        }
-        else if (direction.x == -1)
-        {
-            currentState = SuperJack.FaceLeft;
-            SetBulletDirection(new Vector2(-1, 0));
-        }
-        else if (direction.x == 1)
-        {
-            currentState = SuperJack.FaceRight;
-            SetBulletDirection(new Vector2(1, 0));
-        }
+        BulletControl();
+        CleanStrayBullets();
+        SetWalkType();
 
-        // Animation state logic
-        // 0 = Left/Right
-        // 1 = Down
-        // 2 = Up
-        if (currentState == SuperJack.FaceUp)
-        {
-            animator.SetInteger("WalkType", 2);
-        }
-        else if (currentState == SuperJack.FaceDown)
-        {
-            animator.SetInteger("WalkType", 1);
-        }
-        else if (currentState == SuperJack.FaceLeft)
-        {
-            animator.SetInteger("WalkType", 0);
-            spriteRenderer.flipX = false;
-        }
-        else if (currentState == SuperJack.FaceRight)
-        {
-            animator.SetInteger("WalkType", 0);
-            spriteRenderer.flipX = true;
-        }
-
-        // Movement Logic
-        if (health > 0)
-        {
-            // Update veloctity
-            velocity = direction * speed * Time.deltaTime;
-
-            // Add velocity to our current position
-            playerPos += velocity;
-
-            // Draw at calculated position
-            transform.position = playerPos;
-
-            // Prevent moving outside the bounds
-            if (playerPos.x >= screenWidth)
-            {
-                playerPos = new Vector3(screenWidth, playerPos.y, 0);
-                transform.position = new Vector3(screenWidth, playerPos.y, 0);
-            }
-            else if (playerPos.x <= -screenWidth)
-            {
-                playerPos = new Vector3(-screenWidth, playerPos.y, 0);
-                transform.position = new Vector3(-screenWidth, playerPos.y, 0);
-            }
-            if (playerPos.y >= screenHeight)
-            {
-                playerPos = new Vector3(playerPos.x, screenHeight, 0);
-                transform.position = new Vector3(playerPos.x, screenHeight, 0);
-            }
-            else if (playerPos.y <= -screenHeight)
-            {
-                playerPos = new Vector3(playerPos.x, -screenHeight, 0);
-                transform.position = new Vector3(playerPos.x, -screenHeight, 0);
-            }
-
-            // Clean up stray bullets
-            foreach (GameObject b in bullets)
-            {
-                if (b.transform.position.y > screenHeight ||
-                    b.transform.position.y < -screenHeight ||
-                    b.transform.position.x > screenWidth ||
-                    b.transform.position.x < -screenWidth)
-                {
-                    Destroy(b);
-                    bullets.Remove(b);
-                    return;
-                }
-            }
-        }
-        else
+        // Stop on death
+        if (Health !> 0)
         {
             StopAllCoroutines();
         }
@@ -163,7 +59,8 @@ public class Player : MonoBehaviour
     /// <param name="context"></param>
     public void OnMove(InputAction.CallbackContext context)
     {
-        direction = context.ReadValue<Vector2>();
+        Vector2 playerDirection = context.ReadValue<Vector2>();
+        ApplyDirection(playerDirection);
 
         // If speed = 0 --> idle
         animator.SetFloat("Speed", 1f);
@@ -178,7 +75,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (health > 0)
+        if (Health > 0)
         {
             if (context.performed && !reloading)
             {
@@ -245,8 +142,84 @@ public class Player : MonoBehaviour
         }
     }
 
+    void CleanStrayBullets()
+    {
+        // Clean up stray bullets
+        foreach (GameObject b in bullets)
+        {
+            if (b.transform.position.y > screenHeight ||
+                b.transform.position.y < -screenHeight ||
+                b.transform.position.x > screenWidth ||
+                b.transform.position.x < -screenWidth)
+            {
+                Destroy(b);
+                bullets.Remove(b);
+                return;
+            }
+        }
+    }
+
+    void BulletControl()
+    {
+        // Enum control
+        if (Direction.y == 1)
+        {
+            currentState = SuperJack.FaceUp;
+            SetBulletDirection(new Vector2(0, 1));
+        }
+        else if (Direction.y == -1)
+        {
+            currentState = SuperJack.FaceDown;
+            SetBulletDirection(new Vector2(0, -1));
+        }
+        else if (Direction.x == -1)
+        {
+            currentState = SuperJack.FaceLeft;
+            SetBulletDirection(new Vector2(-1, 0));
+        }
+        else if (Direction.x == 1)
+        {
+            currentState = SuperJack.FaceRight;
+            SetBulletDirection(new Vector2(1, 0));
+        }
+    }
+
     void SetBulletDirection(Vector2 vector)
     {
         bulletRotation = Quaternion.LookRotation(Vector3.forward, vector);
+    }
+
+    /// <summary>
+    /// Controls animation variable for walk cycles
+    /// </summary>
+    void SetWalkType()
+    {
+        // Animation state logic
+        // 0 = Left/Right
+        // 1 = Down
+        // 2 = Up
+        if (currentState == SuperJack.FaceUp)
+        {
+            animator.SetInteger("WalkType", 2);
+        }
+        else if (currentState == SuperJack.FaceDown)
+        {
+            animator.SetInteger("WalkType", 1);
+        }
+        else if (currentState == SuperJack.FaceLeft)
+        {
+            animator.SetInteger("WalkType", 0);
+            spriteRenderer.flipX = false;
+        }
+        else if (currentState == SuperJack.FaceRight)
+        {
+            animator.SetInteger("WalkType", 0);
+            spriteRenderer.flipX = true;
+        }
+    }
+
+    protected override void CalcSteeringForces()
+    {
+        throw new System.NotImplementedException();
     }
 }
