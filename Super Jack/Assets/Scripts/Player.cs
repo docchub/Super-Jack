@@ -45,9 +45,10 @@ public class Player : Agent
         BulletControl();
         CleanStrayBullets();
         SetWalkType();
+        PlayerMovement();
 
         // Stop on death
-        if (Health !> 0)
+        if (Health <= 0)
         {
             StopAllCoroutines();
         }

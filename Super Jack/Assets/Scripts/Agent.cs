@@ -57,9 +57,6 @@ public abstract class Agent : MonoBehaviour
 
         ApplyForce(totalSteeringForce);
 
-        // Stay in the screen bounds
-        StayInBounds();
-
         // Physics object movement
         if (health > 0)
         {
@@ -69,10 +66,20 @@ public abstract class Agent : MonoBehaviour
             transform.position = position;
         }
 
+        // Stay in the screen bounds
+        StayInBounds();
+
         force = Vector3.zero;
     }
 
     protected abstract void CalcSteeringForces();
+
+    protected void PlayerMovement()
+    {
+        velocity = direction * speed * Time.deltaTime;
+        position += velocity;
+        transform.position = position;
+    }
 
     public void ApplyForce(Vector3 addedForce)
     {
@@ -129,12 +136,14 @@ public abstract class Agent : MonoBehaviour
         this.manager = manager;
     }
 
+    /// <summary>
+    /// Allow agents to reference other agents
+    /// </summary>
     void InitializeAgents()
     {
         string sJackPlayer = "superJack(Clone)";
         string nerve = "nerve(Clone)";
 
-        superJack = new Player();
         nerveList = new List<Nerve>();
 
         foreach (Agent agent in manager.Agents)

@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
-  speed: 5
+  speed: 3
   maxForce: 1
   animator: {fileID: 3899062068849673016}
   bullet: {fileID: 2081896381821467233, guid: ed019270bd969944aa8d400f36cc85ee, type: 3}
