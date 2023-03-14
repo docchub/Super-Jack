@@ -19,8 +19,7 @@ public class Player : Agent
     SuperJack currentState;
 
     [SerializeField]
-    GameObject bullet;
-    List<GameObject> bullets = new List<GameObject>();
+    PlayerBullet bulletPrefab;
 
     [SerializeField]
     float fireRate = 1f;
@@ -28,6 +27,7 @@ public class Player : Agent
     bool reloading;
     Quaternion bulletRotation = Quaternion.identity;
 
+    // Used for flipping player sprite
     SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
@@ -107,11 +107,11 @@ public class Player : Agent
     /// Reference to the player bullets
     /// </summary>
     /// <returns></returns>
-    public List<GameObject> GetPlayerBullets()
+    public List<PlayerBullet> GetPlayerBullets()
     {
-        if (bullets != null && bullets.Count > 0)
+        if (bulletList != null && bulletList.Count > 0)
         {
-            return bullets;
+            return bulletList;
         }
         else
         {
@@ -138,7 +138,7 @@ public class Player : Agent
     {
         while (rapidFire)
         {
-            bullets.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
+            bulletList.Add(Instantiate(bulletPrefab, transform.position, bulletRotation, transform));
             yield return new WaitForSeconds(fireRate);
         }
     }
@@ -146,7 +146,7 @@ public class Player : Agent
     void CleanStrayBullets()
     {
         // Clean up stray bullets
-        foreach (GameObject b in bullets)
+        foreach (PlayerBullet b in bulletList)
         {
             if (b.transform.position.y > screenHeight ||
                 b.transform.position.y < -screenHeight ||
@@ -154,7 +154,7 @@ public class Player : Agent
                 b.transform.position.x < -screenWidth)
             {
                 Destroy(b);
-                bullets.Remove(b);
+                bulletList.Remove(b);
                 return;
             }
         }

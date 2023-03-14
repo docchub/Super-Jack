@@ -14,14 +14,15 @@ public abstract class Agent : MonoBehaviour
 
     protected Vector3 totalSteeringForce;
 
-    public Vector3 Direction { get { return direction; } }
-    public Vector3 Position { get { return position; } }
-    public Vector3 Velocity { get { return velocity; } }
+    public Vector3 Direction { get { return direction; } set { direction = value; } }
+    public Vector3 Position { get { return position; } set { position = value; } }
+    public Vector3 Velocity { get { return velocity; } set { velocity = value; } }
 
     protected float screenHeight;
     protected float screenWidth;
 
     protected Player superJack;
+    protected List<PlayerBullet> bulletList;
     protected List<Nerve> nerveList;
 
     [SerializeField]
@@ -142,8 +143,10 @@ public abstract class Agent : MonoBehaviour
     void InitializeAgents()
     {
         string sJackPlayer = "superJack(Clone)";
+        string pBullet = "bullet(Clone)";
         string nerve = "nerve(Clone)";
 
+        bulletList = new List<PlayerBullet>();
         nerveList = new List<Nerve>();
 
         foreach (Agent agent in manager.Agents)
@@ -151,6 +154,10 @@ public abstract class Agent : MonoBehaviour
             if (agent.name == sJackPlayer)
             {
                 superJack = (Player)agent;
+            }
+            else if (agent.name == pBullet)
+            {
+                bulletList.Add((PlayerBullet)agent);
             }
             else if (agent.name == nerve)
             {
