@@ -1,30 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerBullet : Agent
+public class PlayerBullet : MonoBehaviour
 {
+    [SerializeField]
+    float speed = 1f;
+
+    Vector3 bulletPosition;
+    Vector3 direction;
+    Vector3 velocity = Vector3.zero;
+
     // Start is called before the first frame update
     void Start()
     {
-        Position = transform.position;
-        Direction = transform.rotation * new Vector2(0, 1);
+        bulletPosition = transform.position;
+        direction = transform.rotation * new Vector2(0, 1);
     }
 
     // Update is called once per frame
     void Update()
     {
         // Update veloctity
-        Velocity = Direction * Speed * Time.deltaTime;
+        velocity = direction * speed * Time.deltaTime;
 
         // Add velocity to our current position
-        Position += Velocity;
+        bulletPosition += velocity;
 
-        transform.position = Position;
-    }
-
-    protected override void CalcSteeringForces()
-    {
-        throw new System.NotImplementedException();
+        transform.position = bulletPosition;
     }
 }

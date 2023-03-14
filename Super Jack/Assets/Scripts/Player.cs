@@ -19,7 +19,8 @@ public class Player : Agent
     SuperJack currentState;
 
     [SerializeField]
-    PlayerBullet bulletPrefab;
+    GameObject bullet;
+    List<GameObject> bullets = new List<GameObject>();
 
     [SerializeField]
     float fireRate = 1f;
@@ -107,11 +108,11 @@ public class Player : Agent
     /// Reference to the player bullets
     /// </summary>
     /// <returns></returns>
-    public List<PlayerBullet> GetPlayerBullets()
+    public List<GameObject> GetPlayerBullets()
     {
-        if (bulletList != null && bulletList.Count > 0)
+        if (bullets != null && bullets.Count > 0)
         {
-            return bulletList;
+            return bullets;
         }
         else
         {
@@ -138,7 +139,7 @@ public class Player : Agent
     {
         while (rapidFire)
         {
-            bulletList.Add(Instantiate(bulletPrefab, transform.position, bulletRotation, transform));
+            Instantiate(bullet, transform.position, bulletRotation, transform);
             yield return new WaitForSeconds(fireRate);
         }
     }
@@ -146,7 +147,7 @@ public class Player : Agent
     void CleanStrayBullets()
     {
         // Clean up stray bullets
-        foreach (PlayerBullet b in bulletList)
+        foreach (GameObject b in bullets)
         {
             if (b.transform.position.y > screenHeight ||
                 b.transform.position.y < -screenHeight ||
@@ -154,7 +155,7 @@ public class Player : Agent
                 b.transform.position.x < -screenWidth)
             {
                 Destroy(b);
-                bulletList.Remove(b);
+                bullets.Remove(b);
                 return;
             }
         }

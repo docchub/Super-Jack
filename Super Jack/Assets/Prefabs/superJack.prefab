@@ -103,7 +103,7 @@ MonoBehaviour:
   speed: 2.5
   maxForce: 1
   animator: {fileID: 3899062068849673016}
-  bulletPrefab: {fileID: 2081896381821467232, guid: ed019270bd969944aa8d400f36cc85ee, type: 3}
+  bullet: {fileID: 2081896381821467233, guid: ed019270bd969944aa8d400f36cc85ee, type: 3}
   fireRate: 0.7
 --- !u!114 &3899062068849673017
 MonoBehaviour:
