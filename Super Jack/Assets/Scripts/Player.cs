@@ -20,7 +20,7 @@ public class Player : Agent
 
     [SerializeField]
     GameObject bullet;
-    List<GameObject> bullets = new List<GameObject>();
+    List<GameObject> bullets;
 
     [SerializeField]
     float fireRate = 1f;
@@ -37,6 +37,12 @@ public class Player : Agent
         rapidFire = false;
         reloading = false;
 
+        // Set world bounds
+        screenHeight = Camera.main.orthographicSize;
+        screenWidth = Camera.main.aspect * screenHeight;
+
+        // Initialize
+        bullets = new List<GameObject>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
@@ -108,7 +114,7 @@ public class Player : Agent
     /// Reference to the player bullets
     /// </summary>
     /// <returns></returns>
-    public List<GameObject> GetPlayerBullets()
+    List<GameObject> GetPlayerBullets()
     {
         if (bullets != null && bullets.Count > 0)
         {
@@ -139,7 +145,7 @@ public class Player : Agent
     {
         while (rapidFire)
         {
-            Instantiate(bullet, transform.position, bulletRotation, transform);
+            bullets.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
             yield return new WaitForSeconds(fireRate);
         }
     }
