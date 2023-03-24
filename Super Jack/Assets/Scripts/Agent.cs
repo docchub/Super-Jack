@@ -12,6 +12,24 @@ public abstract class Agent : MonoBehaviour
 
     Vector3 force = Vector3.zero;
 
+    SpriteRenderer agent1Sprite;
+    SpriteRenderer agent2Sprite;
+
+    float aWidth;
+    float aHeight;
+    float bWidth;
+    float bHeight;
+
+    float aMaxX;
+    float aMinX;
+    float aMaxY;
+    float aMinY;
+
+    float bMaxX;
+    float bMinX;
+    float bMaxY;
+    float bMinY;
+
     protected Vector3 totalSteeringForce;
 
     public Vector3 Direction { get { return direction; }}
@@ -74,23 +92,40 @@ public abstract class Agent : MonoBehaviour
 
     protected abstract void CalcSteeringForces();
 
+    /// <summary>
+    /// Movement for the Player agent
+    /// </summary>
     protected void PlayerMovement()
     {
         velocity = direction * speed * Time.deltaTime;
         position += velocity;
         transform.position = position;
+        StayInBounds();
     }
 
+    /// <summary>
+    /// Apply a force to an agent
+    /// </summary>
+    /// <param name="addedForce"></param>
     public void ApplyForce(Vector3 addedForce)
     {
         force += addedForce;
     }
 
-    public void ApplyDirection(Vector2 playerDirection)
+    /// <summary>
+    /// Apply a direction to an agent
+    /// </summary>
+    /// <param name="pDirection"></param>
+    public void ApplyDirection(Vector3 pDirection)
     {
-        direction = playerDirection;
+        direction = pDirection;
     }
 
+    /// <summary>
+    /// Seek an agent
+    /// </summary>
+    /// <param name="targetPos"></param>
+    /// <returns></returns>
     public Vector3 Seek(Vector3 targetPos)
     {
         Vector2 desiredVelocity = targetPos - position;
@@ -156,6 +191,47 @@ public abstract class Agent : MonoBehaviour
             {
                 nerveList.Add((Nerve)agent);
             }
+        }
+    }
+
+    /// <summary>
+    /// Detect AABB collisions between 2 agents
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    protected bool BoxCollisions(GameObject a, GameObject b)
+    {
+        // Get both objects' spriterenders
+        agent1Sprite = a.GetComponent<SpriteRenderer>();
+        agent2Sprite = b.GetComponent<SpriteRenderer>();
+
+        // Determine object widths and heights
+        aWidth = agent1Sprite.bounds.size.x / 2;
+        aHeight = agent1Sprite.bounds.size.y / 2;
+        bWidth = agent2Sprite.bounds.size.x / 2;
+        bHeight = agent2Sprite.bounds.size.y / 2;
+
+        // Max width and height
+        aMaxX = a.transform.position.x + aWidth;
+        aMinX = a.transform.position.x - aWidth;
+        aMaxY = a.transform.position.y + aHeight;
+        aMinY = a.transform.position.y - aHeight;
+        bMaxX = b.transform.position.x + bWidth;
+        bMinX = b.transform.position.x - bWidth;
+        bMaxY = b.transform.position.y + bHeight;
+        bMinY = b.transform.position.y - bHeight;
+
+        if (aMaxX > bMinX && aMinX < bMaxX && aMinY < bMaxY && aMaxY > bMinY)
+        {
+            // Collision is detected
+            return true;
+        }
+
+        else
+        {
+            // No collision
+            return false;
         }
     }
 }
