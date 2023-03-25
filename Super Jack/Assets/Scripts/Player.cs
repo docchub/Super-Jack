@@ -143,8 +143,9 @@ public class Player : Agent
                 b.transform.position.x > screenWidth ||
                 b.transform.position.x < -screenWidth)
             {
-                Destroy(b);
+                Destroy(b.gameObject);
                 bulletList.Remove(b);
+                Debug.Log(bulletList.Count);
                 return;
             }
         }
