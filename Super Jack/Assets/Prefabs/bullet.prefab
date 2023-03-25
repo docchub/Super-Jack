@@ -97,6 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d33d4ef36386174289670e3f9186eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  superJack: {fileID: 3899062068849673018, guid: 10a6c8b0966c5b3448cc5118da4201c5, type: 3}
+  nerveList: []
+  bulletList: []
   health: 0
   speed: 4
   maxForce: 1

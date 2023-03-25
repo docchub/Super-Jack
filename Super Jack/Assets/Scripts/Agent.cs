@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public abstract class Agent : MonoBehaviour
 {
-    protected AgentManager manager;
+    public AgentManager manager;
 
     Vector3 direction = Vector3.zero;
     Vector3 position = Vector3.zero;
@@ -39,13 +40,23 @@ public abstract class Agent : MonoBehaviour
     protected float screenHeight;
     protected float screenWidth;
 
-    protected Player superJack;
-    protected List<Nerve> nerveList;
-    protected List<PlayerBullet> bulletList;
+    public Player superJack;
+    public List<Nerve> nerveList;
+    public List<PlayerBullet> bulletList;
 
     [SerializeField]
     int health = 4;
-    public int Health { get { return health; } }
+    public int Health
+    {
+        get { return health; }
+        set
+        {
+            if (value >= 0)
+            {
+                health = value;
+            }
+        }
+    }
 
     [SerializeField]
     float speed = 1f;
@@ -70,7 +81,7 @@ public abstract class Agent : MonoBehaviour
     {
         totalSteeringForce = Vector3.zero;
 
-        CalcSteeringForces();
+        AgentUpdate();
 
         totalSteeringForce = Vector3.ClampMagnitude(totalSteeringForce, maxForce);
 
@@ -91,7 +102,7 @@ public abstract class Agent : MonoBehaviour
         force = Vector3.zero;
     }
 
-    protected abstract void CalcSteeringForces();
+    protected abstract void AgentUpdate();
 
     /// <summary>
     /// Movement for the Player agent
@@ -101,7 +112,6 @@ public abstract class Agent : MonoBehaviour
         velocity = direction * speed * Time.deltaTime;
         position += velocity;
         transform.position = position;
-        StayInBounds();
     }
 
     /// <summary>
@@ -179,10 +189,10 @@ public abstract class Agent : MonoBehaviour
     {
         string sJackPlayer = "superJack(Clone)";
         string nerve = "nerve(Clone)";
-        //string bullet = "bullet(Clone)";
+        string bullet = "bullet(Clone)";
 
         nerveList = new List<Nerve>();
-        //bulletList = new List<PlayerBullet>();
+        bulletList = new List<PlayerBullet>();
 
         foreach (Agent agent in manager.Agents)
         {
@@ -194,10 +204,10 @@ public abstract class Agent : MonoBehaviour
             {
                 nerveList.Add((Nerve)agent);
             }
-            //else if (agent.name == bullet)
-            //{
-            //    bulletList.Add((PlayerBullet)agent);
-            //}
+            else if (agent.name == bullet)
+            {
+                bulletList.Add((PlayerBullet)agent);
+            }
         }
     }
 
@@ -232,7 +242,6 @@ public abstract class Agent : MonoBehaviour
         if (aMaxX > bMinX && aMinX < bMaxX && aMinY < bMaxY && aMaxY > bMinY)
         {
             // Collision is detected
-            Debug.Log("Collision detected.");
             return true;
         }
 

@@ -17,8 +17,14 @@ public class AgentManager : MonoBehaviour
     void Start()
     {
         agents.Add(Instantiate(player));
-        agents[0].Init(this);
+        InitAgent(agents[0]);
         agents.Add(Instantiate(nervePrefab));
-        agents[1].Init(this);
+        InitAgent(agents[1]);
     }
+
+    public void InitAgent(Agent agent)
+    {
+        agent.Init(this);
+    }
+
 }

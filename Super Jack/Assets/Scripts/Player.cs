@@ -31,7 +31,7 @@ public class Player : Agent
     SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rapidFire = false;
         reloading = false;
@@ -41,23 +41,15 @@ public class Player : Agent
         screenWidth = Camera.main.aspect * screenHeight;
 
         // Initialize
-        bulletList = new List<PlayerBullet>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void AgentUpdate()
     {
         BulletControl();
         CleanStrayBullets();
         SetWalkType();
         PlayerMovement();
-
-        // Stop on death
-        if (Health <= 0)
-        {
-            StopAllCoroutines();
-        }
     }
 
     /// <summary>
@@ -129,6 +121,7 @@ public class Player : Agent
         while (rapidFire)
         {
             bulletList.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
+            manager.InitAgent(bulletList[bulletList.Count - 1]);
             yield return new WaitForSeconds(fireRate);
         }
     }
@@ -136,17 +129,19 @@ public class Player : Agent
     void CleanStrayBullets()
     {
         // Clean up stray bullets
-        foreach (PlayerBullet b in bulletList)
+        if (bulletList.Count > 0)
         {
-            if (b.transform.position.y > screenHeight ||
-                b.transform.position.y < -screenHeight ||
-                b.transform.position.x > screenWidth ||
-                b.transform.position.x < -screenWidth)
+            foreach (PlayerBullet b in bulletList)
             {
-                Destroy(b.gameObject);
-                bulletList.Remove(b);
-                Debug.Log(bulletList.Count);
-                return;
+                if (b.transform.position.y > screenHeight ||
+                    b.transform.position.y < -screenHeight ||
+                    b.transform.position.x > screenWidth ||
+                    b.transform.position.x < -screenWidth)
+                {
+                    Destroy(b.gameObject);
+                    bulletList.Remove(b);
+                    return;
+                }
             }
         }
     }
@@ -208,10 +203,5 @@ public class Player : Agent
             animator.SetInteger("WalkType", 0);
             spriteRenderer.flipX = true;
         }
-    }
-
-    protected override void CalcSteeringForces()
-    {
-        throw new System.NotImplementedException();
     }
 }

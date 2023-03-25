@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4751477587275403405}
   - component: {fileID: 8457618066201586838}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: nerve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,6 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20aeeb50c390a7044a84321f89aa5758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  superJack: {fileID: 3899062068849673018, guid: 10a6c8b0966c5b3448cc5118da4201c5, type: 3}
+  nerveList: []
+  bulletList: []
   health: 4
   speed: 1
   maxForce: 1
