@@ -19,8 +19,7 @@ public class Player : Agent
     SuperJack currentState;
 
     [SerializeField]
-    GameObject bullet;
-    List<GameObject> bullets;
+    PlayerBullet bullet;
 
     [SerializeField]
     float fireRate = 1f;
@@ -42,7 +41,7 @@ public class Player : Agent
         screenWidth = Camera.main.aspect * screenHeight;
 
         // Initialize
-        bullets = new List<GameObject>();
+        bulletList = new List<PlayerBullet>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
@@ -111,22 +110,6 @@ public class Player : Agent
     }
 
     /// <summary>
-    /// Reference to the player bullets
-    /// </summary>
-    /// <returns></returns>
-    List<GameObject> GetPlayerBullets()
-    {
-        if (bullets != null && bullets.Count > 0)
-        {
-            return bullets;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    /// <summary>
     /// Prevent button mashing to fire faster
     /// </summary>
     /// <returns></returns>
@@ -145,7 +128,7 @@ public class Player : Agent
     {
         while (rapidFire)
         {
-            bullets.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
+            bulletList.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
             yield return new WaitForSeconds(fireRate);
         }
     }
@@ -153,7 +136,7 @@ public class Player : Agent
     void CleanStrayBullets()
     {
         // Clean up stray bullets
-        foreach (GameObject b in bullets)
+        foreach (PlayerBullet b in bulletList)
         {
             if (b.transform.position.y > screenHeight ||
                 b.transform.position.y < -screenHeight ||
@@ -161,7 +144,7 @@ public class Player : Agent
                 b.transform.position.x < -screenWidth)
             {
                 Destroy(b);
-                bullets.Remove(b);
+                bulletList.Remove(b);
                 return;
             }
         }

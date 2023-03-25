@@ -32,15 +32,16 @@ public abstract class Agent : MonoBehaviour
 
     protected Vector3 totalSteeringForce;
 
-    public Vector3 Direction { get { return direction; }}
-    public Vector3 Position { get { return position; }}
-    public Vector3 Velocity { get { return velocity; }}
+    public Vector3 Direction { get { return direction; } set { direction = value; } }
+    public Vector3 Position { get { return position; } set { position = value; } }
+    public Vector3 Velocity { get { return velocity; } set { velocity = value; } }
 
     protected float screenHeight;
     protected float screenWidth;
 
     protected Player superJack;
     protected List<Nerve> nerveList;
+    protected List<PlayerBullet> bulletList;
 
     [SerializeField]
     int health = 4;
@@ -178,8 +179,10 @@ public abstract class Agent : MonoBehaviour
     {
         string sJackPlayer = "superJack(Clone)";
         string nerve = "nerve(Clone)";
+        //string bullet = "bullet(Clone)";
 
         nerveList = new List<Nerve>();
+        //bulletList = new List<PlayerBullet>();
 
         foreach (Agent agent in manager.Agents)
         {
@@ -191,6 +194,10 @@ public abstract class Agent : MonoBehaviour
             {
                 nerveList.Add((Nerve)agent);
             }
+            //else if (agent.name == bullet)
+            //{
+            //    bulletList.Add((PlayerBullet)agent);
+            //}
         }
     }
 
@@ -225,13 +232,11 @@ public abstract class Agent : MonoBehaviour
         if (aMaxX > bMinX && aMinX < bMaxX && aMinY < bMaxY && aMaxY > bMinY)
         {
             // Collision is detected
+            Debug.Log("Collision detected.");
             return true;
         }
 
-        else
-        {
-            // No collision
-            return false;
-        }
+        // No collision
+        return false;
     }
 }
