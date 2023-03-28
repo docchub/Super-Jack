@@ -11,7 +11,7 @@ public class AgentManager : MonoBehaviour
     Nerve nervePrefab;
 
     List<Agent> agents = new List<Agent>();
-    public List<Agent> Agents { get { return agents; } }
+    public List<Agent> Agents { get { return agents; } set { agents = value; } }
 
     // Start is called before the first frame update
     void Start()

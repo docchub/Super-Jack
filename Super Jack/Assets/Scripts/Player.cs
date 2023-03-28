@@ -120,8 +120,8 @@ public class Player : Agent
     {
         while (rapidFire)
         {
-            bulletList.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
-            manager.InitAgent(bulletList[bulletList.Count - 1]);
+            manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
+            manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
             yield return new WaitForSeconds(fireRate);
         }
     }
@@ -140,6 +140,7 @@ public class Player : Agent
                 {
                     Destroy(b.gameObject);
                     bulletList.Remove(b);
+                    manager.Agents.Remove(b);
                     return;
                 }
             }

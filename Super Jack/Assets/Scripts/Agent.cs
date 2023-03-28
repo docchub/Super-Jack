@@ -207,6 +207,13 @@ public abstract class Agent : MonoBehaviour
             else if (agent.name == bullet)
             {
                 bulletList.Add((PlayerBullet)agent);
+
+                // Give each existing agent that needs it a reference to the bullet
+                superJack.bulletList = bulletList;
+                foreach (Nerve n in nerveList)
+                {
+                    n.bulletList = bulletList;
+                }
             }
         }
     }

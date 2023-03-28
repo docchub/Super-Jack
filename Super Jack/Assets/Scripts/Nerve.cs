@@ -14,5 +14,16 @@ public class Nerve : Agent
         {
             // nothing yet
         }
+
+        if (Health <= 0)
+        {
+            manager.Agents.Remove(this);
+            superJack.nerveList.Remove(this);
+            foreach (PlayerBullet b in bulletList)
+            {
+                b.nerveList.Remove(this);
+            }
+            Destroy(gameObject);
+        }
     }
 }

@@ -159,7 +159,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.09411765, g: 0.07450981, b: 0.07058824, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -237,7 +237,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 3899062068849673018, guid: 10a6c8b0966c5b3448cc5118da4201c5, type: 3}
-  bulletPrefab: {fileID: 2081896381821467232, guid: ed019270bd969944aa8d400f36cc85ee, type: 3}
   nervePrefab: {fileID: 8457618066201586838, guid: a3ff5ade7d990714e82bbc4564893f9e, type: 3}
 --- !u!4 &1252005954
 Transform:

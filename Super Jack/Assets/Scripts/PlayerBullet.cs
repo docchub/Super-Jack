@@ -32,7 +32,11 @@ public class PlayerBullet : Agent
                 if (BoxCollisions(gameObject, nerve.gameObject))
                 {
                     bulletList.Remove(this);
-                    //Destroy(gameObject);
+                    superJack.bulletList.Remove(this);
+                    manager.Agents.Remove(this);
+                    Destroy(gameObject);
+
+                    nerve.Health--;
                 }
             }
         }
