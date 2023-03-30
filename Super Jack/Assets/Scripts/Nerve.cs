@@ -10,6 +10,8 @@ public class Nerve : Agent
     // Used for flipping sprites
     SpriteRenderer spriteRenderer;
 
+    Vector2 vecToPlayer;
+
     private void Awake()
     {
         // Initialize spriterenderer
@@ -27,13 +29,13 @@ public class Nerve : Agent
         }
 
         // Animation Logic
-        Vector2 desiredVelocity = superJack.transform.position - Position;
-        if (Mathf.Abs(desiredVelocity.x) > Mathf.Abs(desiredVelocity.y))
+        vecToPlayer = superJack.transform.position - Position;
+        if (Mathf.Abs(vecToPlayer.x) > Mathf.Abs(vecToPlayer.y))
         {
             animator.SetBool("horizontal", true);
 
             // Flip sprite logic
-            if (desiredVelocity.x > 0)
+            if (vecToPlayer.x > 0)
             {
                 spriteRenderer.flipX = true;
             }
@@ -43,12 +45,12 @@ public class Nerve : Agent
             }
 
         }
-        else if (Mathf.Abs(desiredVelocity.x) < Mathf.Abs(desiredVelocity.y))
+        else if (Mathf.Abs(vecToPlayer.x) < Mathf.Abs(vecToPlayer.y))
         {
             animator.SetBool("horizontal", false);
 
             // Flip vertically moving sprite
-            if (desiredVelocity.y > 0)
+            if (vecToPlayer.y > 0)
             {
                 spriteRenderer.flipY = true;
             }

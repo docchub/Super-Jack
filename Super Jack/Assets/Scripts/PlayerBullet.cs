@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class PlayerBullet : Agent
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    GameObject particles;
+
     void Awake()
     {
         Position = transform.position;
@@ -31,6 +33,8 @@ public class PlayerBullet : Agent
             {
                 if (BoxCollisions(gameObject, nerve.gameObject))
                 {
+                    SpawnParticles(particles);
+
                     bulletList.Remove(this);
                     superJack.bulletList.Remove(this);
                     manager.Agents.Remove(this);
@@ -40,6 +44,15 @@ public class PlayerBullet : Agent
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Drop particles on hit
+    /// </summary>
+    /// <param name="particles"></param>
+    void SpawnParticles(GameObject particles)
+    {
+        Instantiate(particles, Position, Quaternion.identity);
     }
 
     protected override void AgentUpdate()
