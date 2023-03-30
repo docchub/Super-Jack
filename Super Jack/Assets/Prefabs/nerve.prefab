@@ -108,6 +108,7 @@ MonoBehaviour:
   speed: 1
   maxForce: 100
   animator: {fileID: 5805394480551207561}
+  timeRemaining: 2
 --- !u!95 &5805394480551207561
 Animator:
   serializedVersion: 4

@@ -149,6 +149,19 @@ public abstract class Agent : MonoBehaviour
     }
 
     /// <summary>
+    /// Flee an agent
+    /// </summary>
+    /// <param name="targetPos"></param>
+    /// <returns></returns>
+    public Vector3 Flee(Vector3 targetPos)
+    {
+        Vector2 desiredVelocity =  position - targetPos;
+        desiredVelocity = desiredVelocity.normalized * speed;
+        Vector2 fleeForce = desiredVelocity - (Vector2)velocity;
+        return fleeForce;
+    }
+
+    /// <summary>
     /// Stay within the bounds of the screen
     /// </summary>
     void StayInBounds()
