@@ -45,6 +45,7 @@ public abstract class Agent : MonoBehaviour
 
     public Player superJack;
     public List<Nerve> nerveList;
+    public Brain brain;
     public List<PlayerBullet> bulletList;
 
     [SerializeField]
@@ -205,6 +206,7 @@ public abstract class Agent : MonoBehaviour
     {
         string sJackPlayer = "superJack(Clone)";
         string nerve = "nerve(Clone)";
+        string brainString = "brain(Clone)";
         string bullet = "bullet(Clone)";
 
         nerveList = new List<Nerve>();
@@ -219,6 +221,10 @@ public abstract class Agent : MonoBehaviour
             else if (agent.name == nerve)
             {
                 nerveList.Add((Nerve)agent);
+            }
+            else if (agent.name == brainString)
+            {
+                brain = (Brain)agent;
             }
             else if (agent.name == bullet)
             {
@@ -240,7 +246,7 @@ public abstract class Agent : MonoBehaviour
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    protected bool BoxCollisions(GameObject a, GameObject b)
+    public bool BoxCollisions(GameObject a, GameObject b)
     {
         // Get both objects' spriterenders
         agent1Sprite = a.GetComponent<SpriteRenderer>();
