@@ -22,8 +22,8 @@ public class Player : Agent
     PlayerBullet bullet;
 
     [SerializeField]
-    float fireRate = 1f;
-    bool rapidFire;
+    float fireRate = 5f;
+    float fireRateTimer;
     bool reloading;
     Quaternion bulletRotation = Quaternion.identity;
 
@@ -33,7 +33,7 @@ public class Player : Agent
     // Start is called before the first frame update
     void Awake()
     {
-        rapidFire = false;
+        fireRateTimer = fireRate;
         reloading = false;
 
         // Initialize
@@ -46,6 +46,15 @@ public class Player : Agent
         CleanStrayBullets();
         SetWalkType();
         PlayerMovement();
+
+        if (reloading)
+        {
+            fireRateTimer -= Time.deltaTime;
+            if (fireRateTimer <= 0)
+            {
+                reloading = false;
+            }
+        }
     }
 
     /// <summary>
@@ -72,53 +81,27 @@ public class Player : Agent
     {
         if (Health > 0)
         {
+            // Fire button pressed
             if (context.performed && !reloading)
             {
+                // Animation Logic
                 animator.SetBool("Firing", true);
 
-                // Start firing
-                rapidFire = true;
-                StartCoroutine(RapidFire());
+                // Create bullet
+                manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
+                manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
 
-                // Start timer before next shot
-                // Prevents button mashing
-                StartCoroutine(Reload());
+                // Set reload to true and reset timer
+                reloading = true;
+                fireRateTimer = fireRate;
             }
 
+            // Fire button released
             if (context.canceled)
             {
+                // Animation Logic
                 animator.SetBool("Firing", false);
-
-                // Stop firing
-                rapidFire = false;
-                StopCoroutine(RapidFire());
-                StopCoroutine(Reload());
             }
-        }
-    }
-
-    /// <summary>
-    /// Prevent button mashing to fire faster
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator Reload()
-    {
-        reloading = true;
-        yield return new WaitForSeconds(fireRate);
-        reloading = false;
-    }
-
-    /// <summary>
-    /// Fire bullets in succession while holding the fire button
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator RapidFire()
-    {
-        while (rapidFire)
-        {
-            manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
-            manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
-            yield return new WaitForSeconds(fireRate);
         }
     }
 
