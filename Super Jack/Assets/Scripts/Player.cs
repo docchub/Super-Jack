@@ -36,10 +36,6 @@ public class Player : Agent
         rapidFire = false;
         reloading = false;
 
-        // Set world bounds
-        screenHeight = Camera.main.orthographicSize;
-        screenWidth = Camera.main.aspect * screenHeight;
-
         // Initialize
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }

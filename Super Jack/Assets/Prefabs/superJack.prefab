@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61531b82eb54f7c41a35c04eb20d80a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  screenBounds: 0.7
   superJack: {fileID: 3899062068849673018}
   nerveList: []
   bulletList: []

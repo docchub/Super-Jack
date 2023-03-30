@@ -40,6 +40,9 @@ public abstract class Agent : MonoBehaviour
     protected float screenHeight;
     protected float screenWidth;
 
+    public float screenHeightBounds = 0.7f;
+    public float screenWidthBounds = 0.9f;
+
     public Player superJack;
     public List<Nerve> nerveList;
     public List<PlayerBullet> bulletList;
@@ -70,8 +73,8 @@ public abstract class Agent : MonoBehaviour
     {
         position = transform.position;
 
-        screenHeight = Camera.main.orthographicSize;
-        screenWidth = Camera.main.aspect * screenHeight;
+        screenHeight = Camera.main.orthographicSize * screenHeightBounds;
+        screenWidth = Camera.main.aspect * screenHeight * screenWidthBounds;
 
         InitializeAgents();
     }

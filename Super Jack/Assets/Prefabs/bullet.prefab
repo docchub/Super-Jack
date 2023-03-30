@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2081896381821467233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 8, y: 8, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
+  screenBounds: 0.7
   superJack: {fileID: 3899062068849673018, guid: 10a6c8b0966c5b3448cc5118da4201c5, type: 3}
   nerveList: []
   bulletList: []
