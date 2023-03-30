@@ -22,7 +22,7 @@ public class Player : Agent
     PlayerBullet bullet;
 
     [SerializeField]
-    float fireRate = 5f;
+    float fireRate = 1f;
     float fireRateTimer;
     bool reloading;
     Quaternion bulletRotation = Quaternion.identity;
@@ -50,6 +50,14 @@ public class Player : Agent
         if (reloading)
         {
             fireRateTimer -= Time.deltaTime;
+
+            // Drop synth when button is held
+            if (fireRateTimer <= (fireRate/5))
+            {
+                animator.SetBool("Firing", false);
+            }
+
+            // Become able to fire again
             if (fireRateTimer <= 0)
             {
                 reloading = false;
@@ -87,13 +95,13 @@ public class Player : Agent
                 // Animation Logic
                 animator.SetBool("Firing", true);
 
-                // Create bullet
-                manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
-                manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
-
                 // Set reload to true and reset timer
                 reloading = true;
                 fireRateTimer = fireRate;
+
+                // Create bullet
+                manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
+                manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
             }
 
             // Fire button released
