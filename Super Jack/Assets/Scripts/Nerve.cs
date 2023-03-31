@@ -45,7 +45,7 @@ public class Nerve : Agent
             // Player collision
             if (BoxCollisions(gameObject, superJack.gameObject) && !onCooldown)
             {
-                superJack.Health--;
+                superJack.Hurt();
                 onCooldown = true;
                 timeRemaining = initialTimeRemaining;
             }

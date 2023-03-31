@@ -35,6 +35,7 @@ public class Player : Agent
 
     AudioSource source;
     public AudioClip bulletSound;
+    public AudioClip hurtSound;
     public List<AudioClip> walkSounds;
 
     [SerializeField]
@@ -223,9 +224,20 @@ public class Player : Agent
         }
     }
 
+    /// <summary>
+    /// Controls walk sounds
+    /// </summary>
+    /// <param name="index"></param>
     void PlayWalkClip(int index)
     {
         source.clip = walkSounds[index];
+        source.Play();
+    }
+
+    public void Hurt()
+    {
+        Health--;
+        source.clip = hurtSound;
         source.Play();
     }
 }
