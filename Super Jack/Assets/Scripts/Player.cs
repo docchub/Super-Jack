@@ -25,6 +25,7 @@ public class Player : Agent
     float fireRate = 1f;
     float fireRateTimer;
     bool reloading;
+    bool fireButtonReleased;
     Quaternion bulletRotation = Quaternion.identity;
 
     // Used for flipping player sprite
@@ -52,7 +53,7 @@ public class Player : Agent
             fireRateTimer -= Time.deltaTime;
 
             // Drop synth when button is held
-            if (fireRateTimer <= (fireRate/5))
+            if (fireRateTimer <= (fireRate/5) && fireButtonReleased)
             {
                 animator.SetBool("Firing", false);
             }
@@ -61,6 +62,12 @@ public class Player : Agent
             if (fireRateTimer <= 0)
             {
                 reloading = false;
+            }
+
+            // Fire bullet if fire button is held
+            if (!reloading && !fireButtonReleased)
+            {
+                FireBullet();
             }
         }
     }
@@ -89,28 +96,37 @@ public class Player : Agent
     {
         if (Health > 0)
         {
+            fireButtonReleased = false;
+
+            // Animation Logic
+            animator.SetBool("Firing", true);
+
             // Fire button pressed
             if (context.performed && !reloading)
             {
-                // Animation Logic
-                animator.SetBool("Firing", true);
-
-                // Set reload to true and reset timer
-                reloading = true;
-                fireRateTimer = fireRate;
-
-                // Create bullet
-                manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
-                manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
+                FireBullet();
             }
 
             // Fire button released
             if (context.canceled)
             {
+                fireButtonReleased = true;
+
                 // Animation Logic
                 animator.SetBool("Firing", false);
             }
         }
+    }
+
+    void FireBullet()
+    {
+        // Set reload to true and reset timer
+        reloading = true;
+        fireRateTimer = fireRate;
+
+        // Create bullet
+        manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
+        manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
     }
 
     void CleanStrayBullets()
