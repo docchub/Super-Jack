@@ -102,6 +102,7 @@ MonoBehaviour:
   screenWidthBounds: 0.9
   superJack: {fileID: 3899062068849673018, guid: 10a6c8b0966c5b3448cc5118da4201c5, type: 3}
   nerveList: []
+  brain: {fileID: 0}
   bulletList: []
   health: 0
   speed: 4

@@ -163,6 +163,29 @@ public abstract class Agent : MonoBehaviour
     }
 
     /// <summary>
+    /// Don't touch other agents
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 Separation()
+    {
+        Vector3 separateForce = Vector3.zero;
+        float sqrDist;
+
+        foreach (Agent other in manager.Agents)
+        {
+            sqrDist = Vector3.SqrMagnitude(Position - other.Position);
+
+            // Flee the closest agent
+            if (sqrDist != 0)
+            {
+                separateForce += Flee(other.Position) * (1f / sqrDist);
+            }
+        }
+
+        return separateForce;
+    }
+
+    /// <summary>
     /// Stay within the bounds of the screen
     /// </summary>
     void StayInBounds()

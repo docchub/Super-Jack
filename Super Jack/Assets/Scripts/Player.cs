@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 using UnityEngine.UIElements;
 
 enum SuperJack
@@ -31,7 +33,13 @@ public class Player : Agent
     // Used for flipping player sprite
     SpriteRenderer spriteRenderer;
 
-    // Start is called before the first frame update
+    AudioSource source;
+    public AudioClip bulletSound;
+    public List<AudioClip> walkSounds;
+
+    [SerializeField]
+    float playerStepVolume = 0.4f;
+
     void Awake()
     {
         fireRateTimer = fireRate;
@@ -39,6 +47,8 @@ public class Player : Agent
 
         // Initialize
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        source = gameObject.AddComponent<AudioSource>();
+        source.volume = playerStepVolume;
     }
 
     protected override void AgentUpdate()
@@ -127,6 +137,10 @@ public class Player : Agent
         // Create bullet
         manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
         manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
+
+        // Audio
+        source.clip = bulletSound;
+        source.Play();
     }
 
     void CleanStrayBullets()
@@ -207,5 +221,11 @@ public class Player : Agent
             animator.SetInteger("WalkType", 0);
             spriteRenderer.flipX = true;
         }
+    }
+
+    void PlayWalkClip(int index)
+    {
+        source.clip = walkSounds[index];
+        source.Play();
     }
 }

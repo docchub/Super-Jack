@@ -11,10 +11,15 @@ public class Brain : Agent
     GameObject activeHitbox;
 
     bool phaseCompleted;
-
-    SpriteRenderer spriteRenderer;
+    bool brainDead;
 
     int healthIntervals;
+
+    SpriteRenderer spriteRenderer;
+    AudioSource audioSource;
+
+    [SerializeField]
+    GameObject brainEater;
 
     private void Awake()
     {
@@ -23,12 +28,22 @@ public class Brain : Agent
         activeHitbox = hitBoxes[0];
         Instantiate(activeHitbox);
         phaseCompleted = false;
+        brainDead = false;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     protected override void AgentUpdate()
     {
+        // Play braineater music on death
+        if (!brainDead && Health == 0)
+        {
+            brainDead = true;
+            audioSource.Stop();
+            Instantiate(brainEater);
+        }
+
         // Sprite manager
         prevSprite = spriteRenderer.sprite;
         if (Health <= 4 * healthIntervals && Health > 3 * healthIntervals)

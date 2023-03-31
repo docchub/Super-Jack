@@ -40,6 +40,7 @@ public class Nerve : Agent
         else
         {
             totalSteeringForce += Seek(superJack.transform.position);
+            totalSteeringForce += Separation();
 
             // Player collision
             if (BoxCollisions(gameObject, superJack.gameObject) && !onCooldown)

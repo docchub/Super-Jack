@@ -89,5 +89,4 @@ public class AgentManager : MonoBehaviour
     {
         agent.Init(this);
     }
-
 }
