@@ -44,6 +44,22 @@ public class PlayerBullet : Agent
                 }
             }
         }
+
+        // If there's a brain, check for collisions against it
+        if (brain)
+        {
+            if (BoxCollisions(gameObject, brain.gameObject))
+            {
+                SpawnParticles(particles);
+
+                bulletList.Remove(this);
+                superJack.bulletList.Remove(this);
+                manager.Agents.Remove(this);
+                Destroy(gameObject);
+
+                brain.Health--;
+            }
+        }
     }
 
     /// <summary>

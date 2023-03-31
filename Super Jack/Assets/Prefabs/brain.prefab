@@ -107,3 +107,9 @@ MonoBehaviour:
   health: 50
   speed: 0
   maxForce: 0
+  sprites:
+  - {fileID: 21300000, guid: 9a9d4bad289c63f4f917e76fc05151ff, type: 3}
+  - {fileID: 21300000, guid: b5174d21dfcb3ba4985e9b183d6deba0, type: 3}
+  - {fileID: 21300000, guid: 8f2a100313b3105419d3cc5aaf28a854, type: 3}
+  - {fileID: 21300000, guid: c476966434b0bf145854c4be2b6feda7, type: 3}
+  - {fileID: 21300000, guid: f7e66cca512e085489e4fafcdbc35ec3, type: 3}
