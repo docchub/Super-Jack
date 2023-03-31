@@ -48,8 +48,10 @@ public class PlayerBullet : Agent
         // If there's a brain, check for collisions against it
         if (brain)
         {
-            if (BoxCollisions(gameObject, brain.gameObject))
+            // Check for collisions against the brain
+            if (BoxCollisions(gameObject, brain.ActiveHitbox()))
             {
+                // Spawn hit particles
                 SpawnParticles(particles);
 
                 bulletList.Remove(this);
@@ -57,6 +59,7 @@ public class PlayerBullet : Agent
                 manager.Agents.Remove(this);
                 Destroy(gameObject);
 
+                // Subtract brain health
                 brain.Health--;
             }
         }
