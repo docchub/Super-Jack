@@ -14,8 +14,12 @@ public class Brain : Agent
 
     SpriteRenderer spriteRenderer;
 
+    int healthIntervals;
+
     private void Awake()
     {
+        healthIntervals = Health / 5;
+
         activeHitbox = hitBoxes[0];
         Instantiate(activeHitbox);
         phaseCompleted = false;
@@ -27,19 +31,19 @@ public class Brain : Agent
     {
         // Sprite manager
         prevSprite = spriteRenderer.sprite;
-        if (Health <= 40 && Health > 30)
+        if (Health <= 4 * healthIntervals && Health > 3 * healthIntervals)
         {
             spriteRenderer.sprite = sprites[1];
         }
-        else if (Health <= 30 && Health > 20)
+        else if (Health <= 3 * healthIntervals && Health > 2 * healthIntervals)
         {
             spriteRenderer.sprite = sprites[2];
         }
-        else if (Health <= 20 && Health > 10)
+        else if (Health <= 2 * healthIntervals && Health > healthIntervals)
         {
             spriteRenderer.sprite = sprites[3];
         }
-        else if (Health <= 10)
+        else if (Health <= healthIntervals)
         {
             spriteRenderer.sprite = sprites[4];
         }
@@ -50,25 +54,25 @@ public class Brain : Agent
         }
 
         // Instantiate hitboxes
-        if (Health == 40 && phaseCompleted)
+        if (Health == 4 * healthIntervals && phaseCompleted)
         {
             activeHitbox = hitBoxes[1];
             Instantiate(activeHitbox);
             phaseCompleted = false;
         }
-        else if (Health == 30 && phaseCompleted)
+        else if (Health == 3 * healthIntervals && phaseCompleted)
         {
             activeHitbox = hitBoxes[2];
             Instantiate(activeHitbox);
             phaseCompleted = false;
         }
-        else if (Health == 20 && phaseCompleted)
+        else if (Health == 2 * healthIntervals && phaseCompleted)
         {
             activeHitbox = hitBoxes[3];
             Instantiate(activeHitbox);
             phaseCompleted = false;
         }
-        else if (Health == 10 && phaseCompleted)
+        else if (Health == 1 * healthIntervals && phaseCompleted)
         {
             activeHitbox = hitBoxes[4];
             Instantiate(activeHitbox);
