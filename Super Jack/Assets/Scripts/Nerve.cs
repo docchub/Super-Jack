@@ -17,12 +17,21 @@ public class Nerve : Agent
     float initialTimeRemaining = 2f;
     float timeRemaining;
 
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip hurtSound;
+    [SerializeField]
+    AudioClip deathSound;
+
     private void Awake()
     {
         timeRemaining = initialTimeRemaining;
 
         // Initialize spriterenderer
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        source = gameObject.AddComponent<AudioSource>();
     }
 
     protected override void AgentUpdate()
@@ -91,13 +100,37 @@ public class Nerve : Agent
         // If killed, delete the nerve
         if (Health <= 0)
         {
+            timeRemaining -= Time.deltaTime;
+
             manager.Agents.Remove(this);
             superJack.nerveList.Remove(this);
             foreach (PlayerBullet b in bulletList)
             {
                 b.nerveList.Remove(this);
             }
-            Destroy(gameObject);
+
+            // Pause before deleting to let death sound play
+            if (timeRemaining <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    public void Hurt()
+    {
+        Health--;
+
+        if (Health > 0)
+        {
+            source.clip = hurtSound;
+            source.Play();
+        }
+        else
+        {
+            source.clip = deathSound;
+            source.Play();
+            timeRemaining = 0.5f;
         }
     }
 }

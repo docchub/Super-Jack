@@ -1,15 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Door : Agent
 {
+    [SerializeField]
+    int sceneIndex;
+
+    [SerializeField]
+    bool requiresKey;
+
     protected override void AgentUpdate()
     {
         if (BoxCollisions(gameObject, superJack.gameObject))
         {
-            Debug.Log("CHANGE ROOM");
-            // go to next/prev room
+            if (requiresKey && superJack.hasKey)
+            {
+                SceneManager.LoadScene(sceneIndex);
+            }
+            else
+            {
+                SceneManager.LoadScene(sceneIndex);
+            }
         }
     }
 }

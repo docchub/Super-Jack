@@ -16,10 +16,15 @@ public class Brain : Agent
     int healthIntervals;
 
     SpriteRenderer spriteRenderer;
-    AudioSource audioSource;
+    AudioSource source;
+    AudioSource bgMusic;
+
+    public AudioClip hurtSound;
+    public AudioClip brainFight;
+    public AudioClip brainEater;
 
     [SerializeField]
-    GameObject brainEater;
+    float volume = 0.5f;
 
     private void Awake()
     {
@@ -31,7 +36,13 @@ public class Brain : Agent
         brainDead = false;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
+
+        source = gameObject.AddComponent<AudioSource>();
+        source.volume = volume;
+
+        bgMusic = gameObject.AddComponent<AudioSource>();
+        bgMusic.clip = brainFight;
+        bgMusic.Play();
     }
 
     protected override void AgentUpdate()
@@ -40,8 +51,8 @@ public class Brain : Agent
         if (!brainDead && Health == 0)
         {
             brainDead = true;
-            audioSource.Stop();
-            Instantiate(brainEater);
+            bgMusic.clip = brainEater;
+            bgMusic.Play();
         }
 
         // Sprite manager
@@ -98,5 +109,12 @@ public class Brain : Agent
     public GameObject ActiveHitbox()
     {
         return activeHitbox;
+    }
+
+    public void Hurt()
+    {
+        Health--;
+        source.clip = hurtSound;
+        source.Play();
     }
 }

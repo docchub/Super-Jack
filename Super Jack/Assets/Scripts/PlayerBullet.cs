@@ -40,7 +40,7 @@ public class PlayerBullet : Agent
                     manager.Agents.Remove(this);
                     Destroy(gameObject);
 
-                    nerve.Health--;
+                    nerve.Hurt();
                 }
             }
         }
@@ -60,7 +60,7 @@ public class PlayerBullet : Agent
                 Destroy(gameObject);
 
                 // Subtract brain health
-                brain.Health--;
+                brain.Hurt();
             }
         }
     }

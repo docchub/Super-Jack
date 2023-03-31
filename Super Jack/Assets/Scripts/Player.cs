@@ -28,6 +28,8 @@ public class Player : Agent
     float fireRateTimer;
     bool reloading;
     bool fireButtonReleased;
+    public bool hasKey;
+
     Quaternion bulletRotation = Quaternion.identity;
 
     // Used for flipping player sprite
@@ -45,6 +47,7 @@ public class Player : Agent
     {
         fireRateTimer = fireRate;
         reloading = false;
+        hasKey = false;
 
         // Initialize
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();

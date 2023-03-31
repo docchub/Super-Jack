@@ -421,6 +421,7 @@ MonoBehaviour:
   nervePrefab: {fileID: 8476152306766458665, guid: a3ff5ade7d990714e82bbc4564893f9e, type: 3}
   brainPrefab: {fileID: 0}
   doorPrefab: {fileID: 628313220560362468, guid: 491908537d6987d4ba6c55b9210229ee, type: 3}
+  doorKeyPrefab: {fileID: 0}
   doorPos1: {x: -4, y: -4.7}
   doorPos2: {x: 4, y: 4.7}
   nervePosList:

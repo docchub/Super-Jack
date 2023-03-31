@@ -16,6 +16,9 @@ public class AgentManager : MonoBehaviour
     [SerializeField]
     Door doorPrefab;
 
+    [SerializeField]
+    Door doorKeyPrefab;
+
     List<Agent> agents = new List<Agent>();
     public List<Agent> Agents { get { return agents; } set { agents = value; } }
 
