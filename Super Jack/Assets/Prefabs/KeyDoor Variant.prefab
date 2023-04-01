@@ -261,7 +261,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 628313220560362468, guid: 491908537d6987d4ba6c55b9210229ee, type: 3}
       propertyPath: sceneIndex
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 628313220560362468, guid: 491908537d6987d4ba6c55b9210229ee, type: 3}
       propertyPath: requiresKey

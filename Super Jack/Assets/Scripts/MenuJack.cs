@@ -70,7 +70,7 @@ public class MenuJack : MonoBehaviour
                 pauseTimer -= Time.deltaTime;
                 if (pauseTimer <= 0)
                 {
-                    SceneManager.LoadScene(4);
+                    SceneManager.LoadScene(5);
                 }
             }
         }

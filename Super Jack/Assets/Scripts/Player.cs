@@ -141,7 +141,7 @@ public class Player : Agent
             eatingTime -= Time.deltaTime;
             if (eatingTime <= 0)
             {
-                SceneManager.LoadScene(6);
+                SceneManager.LoadScene(7);
             }
         }
     }
@@ -329,7 +329,7 @@ public class Player : Agent
     {
         // Implement death sound + pause
 
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene(6);
     }
 
     IEnumerator DamageEffect()

@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2818945266763669521, guid: 62bc99d146f91784ba1c8999153c91c5, type: 3}
       propertyPath: sceneIndex
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2818945266763669532, guid: 62bc99d146f91784ba1c8999153c91c5, type: 3}
       propertyPath: m_Name
-      value: DoorToScene2
+      value: DoorToScene2 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2818945266763669534, guid: 62bc99d146f91784ba1c8999153c91c5, type: 3}
       propertyPath: m_RootOrder

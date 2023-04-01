@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 437845339922612402, guid: 4f8a28eefa71a4f4698053bf59c248e6, type: 3}
       propertyPath: sceneIndex
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 437845339922612413, guid: 4f8a28eefa71a4f4698053bf59c248e6, type: 3}
       propertyPath: m_RootOrder
@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 437845339922612415, guid: 4f8a28eefa71a4f4698053bf59c248e6, type: 3}
       propertyPath: m_Name
-      value: DoorToScene1
+      value: DoorToScene1 Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f8a28eefa71a4f4698053bf59c248e6, type: 3}
