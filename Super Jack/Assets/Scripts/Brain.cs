@@ -48,6 +48,7 @@ public class Brain : Agent
 
         bgMusic = gameObject.AddComponent<AudioSource>();
         bgMusic.clip = brainFight;
+        bgMusic.volume = 0.8f;
         bgMusic.Play();
 
         // Damage effects
