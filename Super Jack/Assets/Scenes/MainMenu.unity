@@ -482,7 +482,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: hiding in plain sight
+  m_text: super on the brain
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eb650e3639b170140ae95896e1d606e4, type: 2}
   m_sharedMaterial: {fileID: -2756701256219618039, guid: eb650e3639b170140ae95896e1d606e4, type: 2}
@@ -902,6 +902,7 @@ MonoBehaviour:
   chompSound: {fileID: 8300000, guid: 55858dcf297ba6e43af933d8963391fc, type: 3}
   speed: 5
   blackout: {fileID: 8784289757772204, guid: 277ae5c8a906cba49bac8aae35bbad6e, type: 3}
+  pauseTimer: 0
 --- !u!95 &1538210225
 Animator:
   serializedVersion: 4

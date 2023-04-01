@@ -1859,7 +1859,7 @@ MonoBehaviour:
   m_text: 'WASD to Move
 
 
-    Press ''p'' to fire the Synthesizer'
+    Hold ''p'' to fire the Synthesizer'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eb650e3639b170140ae95896e1d606e4, type: 2}
   m_sharedMaterial: {fileID: -2756701256219618039, guid: eb650e3639b170140ae95896e1d606e4, type: 2}
