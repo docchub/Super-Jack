@@ -329,7 +329,7 @@ MonoBehaviour:
   doorPos1: {x: -4, y: -4.7}
   doorPos2: {x: 4, y: 4.7}
   nervePosList: []
-  playerStartPos: {x: 0, y: -4}
+  playerStartPos: {x: 0, y: -3.6}
   keyPos: {x: -3.7, y: 3.7}
   roomNumber: 3
 --- !u!4 &378069513
