@@ -59,6 +59,9 @@ public class Player : Agent
     [SerializeField]
     float eatingTime = 8f;
 
+    [SerializeField]
+    Particle blood;
+
     void Awake()
     {
         fireRateTimer = fireRate;
@@ -194,11 +197,14 @@ public class Player : Agent
     /// </summary>
     public void EatBrain(InputAction.CallbackContext context)
     {
-        // Start brain eating animation
-        if (canEat && !eating)
+        if (context.performed)
         {
-            eating = true;
-            animator.SetBool("Eating", true);
+            // Start brain eating animation
+            if (canEat && !eating)
+            {
+                eating = true;
+                animator.SetBool("Eating", true);
+            }
         }
     }
 
@@ -209,12 +215,15 @@ public class Player : Agent
         fireRateTimer = fireRate;
 
         // Create bullet
-        manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
-        manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
+        if (!eating && !canEat)
+        {
+            manager.Agents.Add(Instantiate(bullet, transform.position, bulletRotation, transform));
+            manager.InitAgent(manager.Agents[manager.Agents.Count - 1]);
 
-        // Audio
-        source.clip = bulletSound;
-        source.Play();
+            // Audio
+            source.clip = bulletSound;
+            source.Play();
+        }
     }
 
     void CleanStrayBullets()
@@ -355,6 +364,8 @@ public class Player : Agent
     {
         source.clip = chompSound; 
         source.Play();
+
+        Instantiate(blood, Position, Quaternion.identity);
     }
 
     void ChompingTeleport()

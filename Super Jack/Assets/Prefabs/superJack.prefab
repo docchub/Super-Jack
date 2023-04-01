@@ -123,6 +123,7 @@ MonoBehaviour:
   playerSfxVolume: 0.45
   flickerTime: 0.1
   eatingTime: 8
+  blood: {fileID: 5558389322166939194, guid: f5be78be6bb1b1c479008f5753de9f67, type: 3}
 --- !u!114 &3899062068849673017
 MonoBehaviour:
   m_ObjectHideFlags: 0
