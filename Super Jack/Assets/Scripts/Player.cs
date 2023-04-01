@@ -47,6 +47,11 @@ public class Player : Agent
     [SerializeField]
     float playerSfxVolume = 0.4f;
 
+    Color playerColor;
+
+    [SerializeField]
+    float flickerTime = 0.01f;
+
     void Awake()
     {
         fireRateTimer = fireRate;
@@ -58,6 +63,9 @@ public class Player : Agent
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         source = gameObject.AddComponent<AudioSource>();
         source.volume = playerSfxVolume;
+
+        // Damage effects
+        playerColor = gameObject.GetComponent<SpriteRenderer>().color;
     }
 
     protected override void AgentUpdate()
@@ -260,6 +268,8 @@ public class Player : Agent
     public void Hurt()
     {
         Health--;
+        StopCoroutine(DamageEffect());
+        StartCoroutine(DamageEffect());
         source.clip = hurtSound;
         source.Play();
     }
@@ -269,5 +279,33 @@ public class Player : Agent
         // Implement death sound + pause
 
         SceneManager.LoadScene(5);
+    }
+
+    IEnumerator DamageEffect()
+    {
+        playerColor.a = 0.5f;
+        gameObject.GetComponent<SpriteRenderer>().color = playerColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        playerColor.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = playerColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        playerColor.a = 0.5f;
+        gameObject.GetComponent<SpriteRenderer>().color = playerColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        playerColor.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = playerColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        playerColor.a = 0.5f;
+        gameObject.GetComponent<SpriteRenderer>().color = playerColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        playerColor.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = playerColor;
+
+        StopCoroutine(DamageEffect());
     }
 }

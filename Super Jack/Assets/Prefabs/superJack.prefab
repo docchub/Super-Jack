@@ -119,7 +119,8 @@ MonoBehaviour:
   walkSounds:
   - {fileID: 8300000, guid: 9f7c0153757f73547b8dcfdeb35e6fca, type: 3}
   - {fileID: 8300000, guid: 4e90ef3dbe70e3c448f59181a27197b7, type: 3}
-  playerStepVolume: 0.4
+  playerSfxVolume: 0.4
+  flickerTime: 0.1
 --- !u!114 &3899062068849673017
 MonoBehaviour:
   m_ObjectHideFlags: 0

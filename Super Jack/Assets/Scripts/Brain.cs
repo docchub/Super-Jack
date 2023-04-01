@@ -26,6 +26,11 @@ public class Brain : Agent
     [SerializeField]
     float volume = 0.5f;
 
+    Color brainColor;
+
+    [SerializeField]
+    float flickerTime = 0.01f;
+
     private void Awake()
     {
         healthIntervals = Health / 5;
@@ -43,6 +48,9 @@ public class Brain : Agent
         bgMusic = gameObject.AddComponent<AudioSource>();
         bgMusic.clip = brainFight;
         bgMusic.Play();
+
+        // Damage effects
+        brainColor = gameObject.GetComponent<SpriteRenderer>().color;
     }
 
     protected override void AgentUpdate()
@@ -115,7 +123,37 @@ public class Brain : Agent
     public void Hurt()
     {
         Health--;
+        StopCoroutine(DamageEffect());
+        StartCoroutine(DamageEffect());
         source.clip = hurtSound;
         source.Play();
+    }
+
+    IEnumerator DamageEffect()
+    {
+        brainColor.a = 0.5f;
+        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        brainColor.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        brainColor.a = 0.5f;
+        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        brainColor.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        brainColor.a = 0.5f;
+        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        brainColor.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+
+        StopCoroutine(DamageEffect());
     }
 }

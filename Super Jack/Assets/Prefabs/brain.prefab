@@ -123,3 +123,4 @@ MonoBehaviour:
   brainFight: {fileID: 8300000, guid: dd345a972f7a9804ba35451dba5a435e, type: 3}
   brainEater: {fileID: 8300000, guid: 85e304ba56b094b47a6d2e479fa3d105, type: 3}
   volume: 0.5
+  flickerTime: 0.1

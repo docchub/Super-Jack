@@ -112,6 +112,7 @@ MonoBehaviour:
   initialTimeRemaining: 2
   hurtSound: {fileID: 8300000, guid: 55858dcf297ba6e43af933d8963391fc, type: 3}
   deathSound: {fileID: 8300000, guid: ed2cd8aae220de74f82b146599520be9, type: 3}
+  flickerTime: 0.1
 --- !u!95 &5805394480551207561
 Animator:
   serializedVersion: 4

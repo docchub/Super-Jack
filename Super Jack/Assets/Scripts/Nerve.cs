@@ -24,6 +24,11 @@ public class Nerve : Agent
     [SerializeField]
     AudioClip deathSound;
 
+    Color nerveColor;
+
+    [SerializeField]
+    float flickerTime = 0.01f;
+
     private void Awake()
     {
         timeRemaining = initialTimeRemaining;
@@ -32,6 +37,9 @@ public class Nerve : Agent
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
         source = gameObject.AddComponent<AudioSource>();
+
+        // Damage effects
+        nerveColor = gameObject.GetComponent<SpriteRenderer>().color;
     }
 
     protected override void AgentUpdate()
@@ -120,6 +128,8 @@ public class Nerve : Agent
     public void Hurt()
     {
         Health--;
+        StopCoroutine(DamageEffect());
+        StartCoroutine(DamageEffect());
 
         if (Health > 0)
         {
@@ -132,5 +142,33 @@ public class Nerve : Agent
             source.Play();
             timeRemaining = 0.5f;
         }
+    }
+
+    IEnumerator DamageEffect()
+    {
+        nerveColor.a = 0.5f;
+        gameObject.GetComponent<SpriteRenderer>().color = nerveColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        nerveColor.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = nerveColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        nerveColor.a = 0.5f;
+        gameObject.GetComponent<SpriteRenderer>().color = nerveColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        nerveColor.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = nerveColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        nerveColor.a = 0.5f;
+        gameObject.GetComponent<SpriteRenderer>().color = nerveColor;
+        yield return new WaitForSeconds(flickerTime);
+
+        nerveColor.a = 1f;
+        gameObject.GetComponent<SpriteRenderer>().color = nerveColor;
+
+        StopCoroutine(DamageEffect());
     }
 }
