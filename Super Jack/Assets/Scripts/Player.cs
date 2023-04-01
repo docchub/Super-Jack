@@ -108,6 +108,7 @@ public class Player : Agent
                 // Fire bullet if fire button is held
                 if (!reloading && !fireButtonReleased)
                 {
+                    // Animation Logic
                     FireBullet();
                 }
             }
@@ -172,9 +173,6 @@ public class Player : Agent
         {
             fireButtonReleased = false;
 
-            // Animation Logic
-            animator.SetBool("Firing", true);
-
             // Fire button pressed
             if (context.performed && !reloading)
             {
@@ -210,6 +208,9 @@ public class Player : Agent
 
     void FireBullet()
     {
+        // Animation Logic
+        animator.SetBool("Firing", true);
+
         // Set reload to true and reset timer
         reloading = true;
         fireRateTimer = fireRate;
