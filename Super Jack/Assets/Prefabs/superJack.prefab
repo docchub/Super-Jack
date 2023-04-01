@@ -116,10 +116,11 @@ MonoBehaviour:
   bulletSound: {fileID: 8300000, guid: 604c0b02d7a6cb54aa0468b52ef09f94, type: 3}
   hurtSound: {fileID: 8300000, guid: a72984d35c4cc2045b5f20d08cb62ac3, type: 3}
   keySound: {fileID: 8300000, guid: cad4a1d62c811d647978c607ff0c5d15, type: 3}
+  chompSound: {fileID: 8300000, guid: f158f28465df62f499073872230dda76, type: 3}
   walkSounds:
   - {fileID: 8300000, guid: 9f7c0153757f73547b8dcfdeb35e6fca, type: 3}
   - {fileID: 8300000, guid: 4e90ef3dbe70e3c448f59181a27197b7, type: 3}
-  playerSfxVolume: 0.4
+  playerSfxVolume: 0.45
   flickerTime: 0.1
 --- !u!114 &3899062068849673017
 MonoBehaviour:
@@ -171,6 +172,18 @@ MonoBehaviour:
       - m_Target: {fileID: 3899062068849673018}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Shoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3899062068849673018}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: EatBrain
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

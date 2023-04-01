@@ -21,7 +21,7 @@ public class OverworldMusic : MonoBehaviour
     {
         currentScene = SceneManager.GetActiveScene();
 
-        if (currentScene.name == "BrainFight")
+        if (currentScene.name == "BrainFight" || currentScene.name == "GameOver")
         {
             Destroy(gameObject);
         }

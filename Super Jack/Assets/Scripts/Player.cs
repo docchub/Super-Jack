@@ -42,6 +42,7 @@ public class Player : Agent
     public AudioClip bulletSound;
     public AudioClip hurtSound;
     public AudioClip keySound;
+    public AudioClip chompSound;
     public List<AudioClip> walkSounds;
 
     [SerializeField]
@@ -52,12 +53,17 @@ public class Player : Agent
     [SerializeField]
     float flickerTime = 0.01f;
 
+    bool eating;
+    bool canEat;
+
     void Awake()
     {
         fireRateTimer = fireRate;
         reloading = false;
         hasKey = false;
         prevHasKey = false;
+        eating = false;
+        canEat = false;
 
         // Initialize
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -70,47 +76,62 @@ public class Player : Agent
 
     protected override void AgentUpdate()
     {
-        BulletControl();
-        CleanStrayBullets();
-        SetWalkType();
-        PlayerMovement();
-
-        if (reloading)
+        if (!eating)
         {
-            fireRateTimer -= Time.deltaTime;
+            BulletControl();
+            CleanStrayBullets();
+            SetWalkType();
+            PlayerMovement();
 
-            // Drop synth when button is held
-            if (fireRateTimer <= (fireRate/5) && fireButtonReleased)
+            if (reloading)
             {
-                animator.SetBool("Firing", false);
+                fireRateTimer -= Time.deltaTime;
+
+                // Drop synth when button is held
+                if (fireRateTimer <= (fireRate / 5) && fireButtonReleased)
+                {
+                    animator.SetBool("Firing", false);
+                }
+
+                // Become able to fire again
+                if (fireRateTimer <= 0)
+                {
+                    reloading = false;
+                }
+
+                // Fire bullet if fire button is held
+                if (!reloading && !fireButtonReleased)
+                {
+                    FireBullet();
+                }
             }
 
-            // Become able to fire again
-            if (fireRateTimer <= 0)
+            // If player picks up the key, play a ring
+            if (hasKey && !prevHasKey)
             {
-                reloading = false;
+                source.clip = keySound;
+                source.Play();
             }
 
-            // Fire bullet if fire button is held
-            if (!reloading && !fireButtonReleased)
+            prevHasKey = hasKey;
+
+            // If player dies go to GameOver scene
+            if (Health <= 0)
             {
-                FireBullet();
+                GameOver();
+            }
+
+            // Can start eating when the brain dies
+            if (brain.Health <= 0)
+            {
+                canEat = true;
             }
         }
 
-        // If player picks up the key, play a ring
-        if (hasKey && !prevHasKey)
+        // JACK EATS THE BRAIN
+        else
         {
-            source.clip = keySound;
-            source.Play();
-        }
 
-        prevHasKey = hasKey;
-
-        // If player dies go to GameOver scene
-        if (Health <= 0)
-        {
-            GameOver();
         }
     }
 
@@ -136,7 +157,7 @@ public class Player : Agent
     /// </summary>
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (Health > 0)
+        if (Health > 0 && !eating)
         {
             fireButtonReleased = false;
 
@@ -157,6 +178,19 @@ public class Player : Agent
                 // Animation Logic
                 animator.SetBool("Firing", false);
             }
+        }
+    }
+
+    /// <summary>
+    /// Start eating brain on key press
+    /// </summary>
+    public void EatBrain(InputAction.CallbackContext context)
+    {
+        // Start brain eating animation
+        if (canEat && !eating)
+        {
+            eating = true;
+            animator.SetBool("Eating", true);
         }
     }
 
@@ -307,5 +341,23 @@ public class Player : Agent
         gameObject.GetComponent<SpriteRenderer>().color = playerColor;
 
         StopCoroutine(DamageEffect());
+    }
+
+    void Chomp()
+    {
+        source.clip = chompSound; 
+        source.Play();
+    }
+
+    void ChompingTeleport()
+    {
+        Position = brain.Position;
+        Position += RandomVector();
+        spriteRenderer.flipX = !spriteRenderer.flipX;
+    }
+
+    Vector3 RandomVector()
+    {
+        return new Vector2(Random.Range(-2.0f, 1.0f), Random.Range(-2.0f, 1.0f));
     }
 }
