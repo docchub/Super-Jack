@@ -56,6 +56,9 @@ public class Player : Agent
     bool eating;
     bool canEat;
 
+    [SerializeField]
+    float eatingTime = 8f;
+
     void Awake()
     {
         fireRateTimer = fireRate;
@@ -131,7 +134,12 @@ public class Player : Agent
         // JACK EATS THE BRAIN
         else
         {
-
+            // Play credits after X seconds
+            eatingTime -= Time.deltaTime;
+            if (eatingTime <= 0)
+            {
+                SceneManager.LoadScene(6);
+            }
         }
     }
 
