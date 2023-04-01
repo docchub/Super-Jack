@@ -52,6 +52,7 @@ public class Brain : Agent
         {
             brainDead = true;
             bgMusic.clip = brainEater;
+            bgMusic.loop = true;
             bgMusic.Play();
         }
 

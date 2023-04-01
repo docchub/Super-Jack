@@ -112,8 +112,10 @@ MonoBehaviour:
   animator: {fileID: 3899062068849673016}
   bullet: {fileID: 2081896381821467232, guid: ed019270bd969944aa8d400f36cc85ee, type: 3}
   fireRate: 0.7
+  hasKey: 0
   bulletSound: {fileID: 8300000, guid: 604c0b02d7a6cb54aa0468b52ef09f94, type: 3}
   hurtSound: {fileID: 8300000, guid: a72984d35c4cc2045b5f20d08cb62ac3, type: 3}
+  keySound: {fileID: 8300000, guid: cad4a1d62c811d647978c607ff0c5d15, type: 3}
   walkSounds:
   - {fileID: 8300000, guid: 9f7c0153757f73547b8dcfdeb35e6fca, type: 3}
   - {fileID: 8300000, guid: 4e90ef3dbe70e3c448f59181a27197b7, type: 3}

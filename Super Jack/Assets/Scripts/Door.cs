@@ -15,9 +15,14 @@ public class Door : Agent
     {
         if (BoxCollisions(gameObject, superJack.gameObject))
         {
-            if (requiresKey && superJack.hasKey)
+            // Lock door if it requires a key
+            if (requiresKey)
             {
-                SceneManager.LoadScene(sceneIndex);
+                // Open if Jack has the key
+                if (superJack.hasKey)
+                {
+                    SceneManager.LoadScene(sceneIndex);
+                }
             }
             else
             {

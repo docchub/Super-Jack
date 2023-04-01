@@ -173,12 +173,15 @@ public abstract class Agent : MonoBehaviour
 
         foreach (Agent other in manager.Agents)
         {
-            sqrDist = Vector3.SqrMagnitude(Position - other.Position);
-
-            // Flee the closest agent
-            if (sqrDist != 0)
+            if (other != superJack)
             {
-                separateForce += Flee(other.Position) * (1f / sqrDist);
+                sqrDist = Vector3.SqrMagnitude(Position - other.Position);
+
+                // Flee the closest agent
+                if (sqrDist != 0)
+                {
+                    separateForce += Flee(other.Position) * (1f / sqrDist);
+                }
             }
         }
 

@@ -14,10 +14,12 @@ public class AgentManager : MonoBehaviour
     Brain brainPrefab;
 
     [SerializeField]
-    Door doorPrefab;
+    Door doorPrefab1;
+    [SerializeField]
+    Door doorPrefab2;
 
     [SerializeField]
-    Door doorKeyPrefab;
+    Key keyPrefab;
 
     List<Agent> agents = new List<Agent>();
     public List<Agent> Agents { get { return agents; } set { agents = value; } }
@@ -34,6 +36,9 @@ public class AgentManager : MonoBehaviour
     Vector2 playerStartPos = new Vector2(-4, -3);
 
     [SerializeField]
+    Vector2 keyPos = new Vector2(-3.7f, 3.7f);
+
+    [SerializeField]
     int roomNumber;
 
     // Start is called before the first frame update
@@ -42,7 +47,7 @@ public class AgentManager : MonoBehaviour
         // Create agents based on the room value
         if (roomNumber == 0)
         {
-
+            StartingRoom();
         }
         else if (roomNumber == 1)
         {
@@ -50,6 +55,12 @@ public class AgentManager : MonoBehaviour
             PlaceDoors();
         }
         else if (roomNumber == 2)
+        {
+            NerveRoom();
+            PlaceDoors();
+            agents.Add(Instantiate(keyPrefab, keyPos, Quaternion.identity));
+        }
+        else if (roomNumber == 3)
         {
             BrainRoom();
         }
@@ -63,7 +74,8 @@ public class AgentManager : MonoBehaviour
 
     void StartingRoom()
     {
-
+        agents.Add(Instantiate(player, playerStartPos, Quaternion.identity));
+        PlaceDoor();
     }
 
     void NerveRoom()
@@ -82,10 +94,15 @@ public class AgentManager : MonoBehaviour
         agents.Add(Instantiate(brainPrefab));
     }
 
+    void PlaceDoor()
+    {
+        agents.Add(Instantiate((Agent)doorPrefab1, doorPos1, Quaternion.identity));
+    }
+
     void PlaceDoors()
     {
-        agents.Add(Instantiate((Agent)doorPrefab, doorPos1, Quaternion.identity));
-        agents.Add(Instantiate((Agent)doorPrefab, doorPos2, Quaternion.identity));
+        agents.Add(Instantiate((Agent)doorPrefab1, doorPos1, Quaternion.identity));
+        agents.Add(Instantiate((Agent)doorPrefab2, doorPos2, Quaternion.identity));
     }
 
     public void InitAgent(Agent agent)

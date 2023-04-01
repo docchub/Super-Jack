@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 enum SuperJack
@@ -28,7 +29,9 @@ public class Player : Agent
     float fireRateTimer;
     bool reloading;
     bool fireButtonReleased;
+
     public bool hasKey;
+    bool prevHasKey;
 
     Quaternion bulletRotation = Quaternion.identity;
 
@@ -38,21 +41,23 @@ public class Player : Agent
     AudioSource source;
     public AudioClip bulletSound;
     public AudioClip hurtSound;
+    public AudioClip keySound;
     public List<AudioClip> walkSounds;
 
     [SerializeField]
-    float playerStepVolume = 0.4f;
+    float playerSfxVolume = 0.4f;
 
     void Awake()
     {
         fireRateTimer = fireRate;
         reloading = false;
         hasKey = false;
+        prevHasKey = false;
 
         // Initialize
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         source = gameObject.AddComponent<AudioSource>();
-        source.volume = playerStepVolume;
+        source.volume = playerSfxVolume;
     }
 
     protected override void AgentUpdate()
@@ -83,6 +88,21 @@ public class Player : Agent
             {
                 FireBullet();
             }
+        }
+
+        // If player picks up the key, play a ring
+        if (hasKey && !prevHasKey)
+        {
+            source.clip = keySound;
+            source.Play();
+        }
+
+        prevHasKey = hasKey;
+
+        // If player dies go to GameOver scene
+        if (Health <= 0)
+        {
+            GameOver();
         }
     }
 
@@ -242,5 +262,12 @@ public class Player : Agent
         Health--;
         source.clip = hurtSound;
         source.Play();
+    }
+
+    void GameOver()
+    {
+        // Implement death sound + pause
+
+        SceneManager.LoadScene(5);
     }
 }

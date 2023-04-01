@@ -155,12 +155,15 @@ MonoBehaviour:
   player: {fileID: 3899062068849673018, guid: 10a6c8b0966c5b3448cc5118da4201c5, type: 3}
   nervePrefab: {fileID: 8476152306766458665, guid: a3ff5ade7d990714e82bbc4564893f9e, type: 3}
   brainPrefab: {fileID: 1056206262185407058, guid: 400527df6c822d54ba8eee30f8ba74a3, type: 3}
-  doorPrefab: {fileID: 628313220560362468, guid: 491908537d6987d4ba6c55b9210229ee, type: 3}
+  doorPrefab1: {fileID: 0}
+  doorPrefab2: {fileID: 0}
+  roomPrefab: {fileID: 0}
   doorPos1: {x: -4, y: -4.7}
   doorPos2: {x: 4, y: 4.7}
   nervePosList: []
   playerStartPos: {x: 0, y: -4}
-  roomNumber: 2
+  roomNumber: 3
+  roomInitialized: 1
 --- !u!4 &378069513
 Transform:
   m_ObjectHideFlags: 0
