@@ -53,7 +53,7 @@ public class Player : Agent
     [SerializeField]
     float flickerTime = 0.01f;
 
-    bool eating;
+    public bool eating;
     bool canEat;
     public bool brainExists;
 

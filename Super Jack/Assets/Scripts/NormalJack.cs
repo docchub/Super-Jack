@@ -25,5 +25,19 @@ public class NormalJack : Agent
             spriteRenderer.sprite = sprite;
             isSuperJack = true;
         }
+
+        // Dont do while eating
+        if (!superJack.eating)
+        {
+            // Move to face super jack
+            if (superJack.Position.x > 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else
+            {
+                spriteRenderer.flipX = false;
+            }
+        }
     }
 }
