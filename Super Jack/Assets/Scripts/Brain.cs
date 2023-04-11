@@ -32,6 +32,8 @@ public class Brain : Agent
     [SerializeField]
     float flickerTime = 0.01f;
 
+    int randomNumber;
+
     private void Awake()
     {
         healthIntervals = Health / 5;
@@ -137,28 +139,49 @@ public class Brain : Agent
 
     IEnumerator DamageEffect()
     {
-        brainColor.a = 0.5f;
-        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
-        yield return new WaitForSeconds(flickerTime);
+        randomNumber = Random.Range(1, 101);
 
-        brainColor.a = 1f;
-        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
-        yield return new WaitForSeconds(flickerTime);
+        // Normal
+        if (randomNumber < 66)
+        {
+            brainColor.a = 0.7f;
+            gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+            yield return new WaitForSeconds(flickerTime);
 
-        brainColor.a = 0.5f;
-        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
-        yield return new WaitForSeconds(flickerTime);
+            brainColor.a = 1f;
+            gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+            yield return new WaitForSeconds(flickerTime);
 
-        brainColor.a = 1f;
-        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
-        yield return new WaitForSeconds(flickerTime);
+            brainColor.a = 0.7f;
+            gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+            yield return new WaitForSeconds(flickerTime);
 
-        brainColor.a = 0.5f;
-        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
-        yield return new WaitForSeconds(flickerTime);
+            brainColor.a = 1f;
+            gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+            yield return new WaitForSeconds(flickerTime);
+        }
 
-        brainColor.a = 1f;
-        gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+        // Grotesque
+        else 
+        {
+            Vector2 ogPos = gameObject.transform.position;
+
+            for (int i = 0; i < 3; i++)
+            {
+                spriteRenderer.transform.position = new Vector3(Random.Range(-1f, 1f), Random.Range(-0.2f, 0.2f));
+                brainColor.a = 0.7f;
+                gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+                yield return new WaitForSeconds(flickerTime);
+
+                spriteRenderer.transform.position = new Vector3(Random.Range(-1f, 1f), Random.Range(-0.2f, 0.2f));
+                brainColor.a = 1f;
+                gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+                yield return new WaitForSeconds(flickerTime);
+            }
+
+            spriteRenderer.transform.position = ogPos;
+            yield return new WaitForSeconds(flickerTime);
+        }
 
         StopCoroutine(DamageEffect());
     }

@@ -62,6 +62,26 @@ public class Player : Agent
     [SerializeField]
     Particle blood;
 
+    #region For brain collision
+    SpriteRenderer playerSprite;
+    SpriteRenderer brainSprite;
+
+    float pWidth;
+    float pHeight;
+    float brainWidth;
+    float brainHeight;
+
+    float pMaxX;
+    float pMinX;
+    float pMaxY;
+    float pMinY;
+
+    float brainMaxX;
+    float brainMinX;
+    float brainMaxY;
+    float brainMinY;
+    #endregion
+
     void Awake()
     {
         fireRateTimer = fireRate;
@@ -89,6 +109,13 @@ public class Player : Agent
             SetWalkType();
             PlayerMovement();
 
+            // Dont overlap with the brain if it exists
+            if (brain)
+            {
+                BrainCollision(brain.gameObject);
+            }
+
+            // Reload and animation logic
             if (reloading)
             {
                 fireRateTimer -= Time.deltaTime;
@@ -379,5 +406,60 @@ public class Player : Agent
     Vector3 RandomVector()
     {
         return new Vector2(Random.Range(-2.0f, 1.0f), Random.Range(-2.0f, 1.0f));
+    }
+
+    /// <summary>
+    /// Prevent the player sprite from overlapping with the brain
+    /// </summary>
+    /// <param name="brainHB"></param>
+    void BrainCollision(GameObject brainHB)
+    {
+        // Get both objects' spriterenders
+        playerSprite = gameObject.GetComponent<SpriteRenderer>();
+        brainSprite = brainHB.GetComponent<SpriteRenderer>();
+
+        // Determine object widths and heights
+        pWidth = playerSprite.bounds.size.x / 2;
+        pHeight = playerSprite.bounds.size.y / 2;
+        brainWidth = brainSprite.bounds.size.x / 2;
+        brainHeight = brainSprite.bounds.size.y / 2;
+
+        // Max width and height
+        pMaxX = gameObject.transform.position.x + pWidth;
+        pMinX = gameObject.transform.position.x - pWidth;
+        pMaxY = gameObject.transform.position.y + pHeight;
+        pMinY = gameObject.transform.position.y - pHeight;
+        brainMaxX = brainHB.transform.position.x + brainWidth;
+        brainMinX = brainHB.transform.position.x - brainWidth;
+        brainMaxY = brainHB.transform.position.y + brainHeight;
+        brainMinY = brainHB.transform.position.y - brainHeight;
+
+        // Left side
+        if (BoxCollisions(gameObject, brainHB) && pMaxX > brainMinX && Position.y > brainMinY && Position.y < brainMaxY && Position.x < brain.Position.x)
+        {
+            Position = new Vector3(brainMinX - pWidth, Position.y);
+            transform.position = new Vector3(brainMinX - pWidth, Position.y);
+        }
+
+        // Right side
+        else if (BoxCollisions(gameObject, brainHB) && pMinX < brainMaxX && Position.y > brainMinY && Position.y < brainMaxY)
+        {
+            Position = new Vector3(brainMaxX + pWidth, Position.y);
+            transform.position = new Vector3(brainMaxX + pWidth, Position.y);
+        }
+
+        // Bottom
+        else if (BoxCollisions(gameObject, brainHB) && pMaxX > brainMinX && Position.x < brainMaxX && Position.x > brainMinX && Position.y < brain.Position.y)
+        {
+            Position = new Vector3(Position.x, brainMinY - pHeight);
+            transform.position = new Vector3(Position.x, brainMinY - pHeight);
+        }
+
+        // Top
+        else if (BoxCollisions(gameObject, brainHB) && pMaxX > brainMinX && Position.x < brainMaxX && Position.x > brainMinX)
+        {
+            Position = new Vector3(Position.x, brainMaxY + pHeight);
+            transform.position = new Vector3(Position.x, brainMaxY + pHeight);
+        }
     }
 }
