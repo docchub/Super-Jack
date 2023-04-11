@@ -79,10 +79,14 @@ public class Brain : Agent
         else if (Health <= 2 * healthIntervals && Health > healthIntervals)
         {
             spriteRenderer.sprite = sprites[3];
+
+            // adjust for sprite
+            Position = new Vector3(-0.5f, 0f);
         }
         else if (Health <= healthIntervals)
         {
             spriteRenderer.sprite = sprites[4];
+            Position = Vector3.zero;
         }
 
         if (prevSprite != spriteRenderer.sprite)

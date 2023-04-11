@@ -24,7 +24,26 @@ public class JackText : MonoBehaviour
         }
         else
         {
-            if (brain.Health <= 0)
+            // Remove text after damaging brain
+            if (brain.Health <= 97 && brain.Health > 80)
+            {
+                textMesh.text = "";
+            }
+
+            // Unmasked Jack Text
+            else if (brain.Health <= 80 && brain.Health > 40)
+            {
+                textMesh.text = "\"What are you doing? Stop!\"";
+                textMesh.fontSize = 23;
+                textMesh.color = UnityEngine.Color.blue;
+            }
+            else if (brain.Health <= 40 && brain.Health > 0)
+            {
+                textMesh.text = "...";
+            }
+
+            // Brain Eater
+            else if (brain.Health <= 0)
             {
                 textMesh.text = "EAT THE BRAIN";
                 textMesh.color = UnityEngine.Color.red;
