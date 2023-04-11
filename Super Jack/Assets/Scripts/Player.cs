@@ -25,7 +25,7 @@ public class Player : Agent
     PlayerBullet bullet;
 
     [SerializeField]
-    float fireRate = 1f;
+    public float fireRate = 1f;
     float fireRateTimer;
     bool reloading;
     bool fireButtonReleased;

@@ -8,6 +8,7 @@ public class JackText : MonoBehaviour
 {
     Brain brain;
     NormalJack jack;
+    Player superJack;
     TextMeshProUGUI textMesh;
 
     // Start is called before the first frame update
@@ -28,10 +29,17 @@ public class JackText : MonoBehaviour
         {
             jack = FindObjectOfType<NormalJack>();
         }
+        if (!superJack)
+        {
+            superJack = FindObjectOfType<Player>();
+        }
 
         // Change the text if normal jack has transformed into super jack
         if (jack.isSuperJack)
         {
+            // increase fire rate
+            superJack.fireRate = 0.4f;
+
             textMesh.text = "\"I'm alright. I'm ok.\"";
             textMesh.fontSize = 23;
             textMesh.color = UnityEngine.Color.blue;
@@ -46,7 +54,7 @@ public class JackText : MonoBehaviour
         else
         {
             // Remove text after damaging brain
-            if (brain.Health <= 97 && brain.Health > 80)
+            if (brain.Health <= 98 && brain.Health > 80)
             {
                 textMesh.text = "";
             }
