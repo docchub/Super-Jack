@@ -46,6 +46,7 @@ public abstract class Agent : MonoBehaviour
     public List<Nerve> nerveList;
     public Brain brain;
     public List<PlayerBullet> bulletList;
+    public NormalJack normalJack;
 
     [SerializeField]
     int health = 4;
@@ -233,6 +234,7 @@ public abstract class Agent : MonoBehaviour
         string nerve = "nerve(Clone)";
         string brainString = "brain(Clone)";
         string bullet = "bullet(Clone)";
+        string nJack = "normalJack(Clone)";
 
         nerveList = new List<Nerve>();
         bulletList = new List<PlayerBullet>();
@@ -250,6 +252,10 @@ public abstract class Agent : MonoBehaviour
             else if (agent.name == brainString)
             {
                 brain = (Brain)agent;
+            }
+            else if (agent.name == nJack)
+            {
+                normalJack = (NormalJack)agent;
             }
             else if (agent.name == bullet)
             {

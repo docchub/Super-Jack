@@ -63,6 +63,23 @@ public class PlayerBullet : Agent
                 brain.Hurt();
             }
         }
+
+        // If there's a normal jack check for collisions against it
+        if (normalJack)
+        {
+            if (BoxCollisions(gameObject, normalJack.gameObject) && normalJack.Health > 0)
+            {
+                // Spawn hit particles
+                SpawnParticles(particles);
+
+                bulletList.Remove(this);
+                superJack.bulletList.Remove(this);
+                manager.Agents.Remove(this);
+                Destroy(gameObject);
+
+                normalJack.Health--;
+            }
+        }
     }
 
     /// <summary>

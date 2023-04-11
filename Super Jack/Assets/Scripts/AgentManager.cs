@@ -8,6 +8,9 @@ public class AgentManager : MonoBehaviour
     Player player;
 
     [SerializeField]
+    NormalJack normalJackPrefab;
+
+    [SerializeField]
     Nerve nervePrefab;
 
     [SerializeField]
@@ -34,6 +37,9 @@ public class AgentManager : MonoBehaviour
 
     [SerializeField]
     Vector2 playerStartPos = new Vector2(-4, -3);
+
+    [SerializeField]
+    Vector2 nJackPos = new Vector2(0.0f, 2.31f);
 
     [SerializeField]
     Vector2 keyPos = new Vector2(-3.7f, 3.7f);
@@ -91,6 +97,7 @@ public class AgentManager : MonoBehaviour
     void BrainRoom()
     {
         agents.Add(Instantiate(player, playerStartPos, Quaternion.identity));
+        agents.Add(Instantiate(normalJackPrefab, nJackPos, Quaternion.identity));
         agents.Add(Instantiate(brainPrefab));
     }
 
