@@ -55,6 +55,7 @@ public class Player : Agent
 
     bool eating;
     bool canEat;
+    public bool brainExists;
 
     [SerializeField]
     float eatingTime = 8f;
@@ -110,9 +111,9 @@ public class Player : Agent
             PlayerMovement();
 
             // Dont overlap with the brain if it exists
-            if (brain)
+            if (brainExists)
             {
-                BrainCollision(brain.gameObject);
+                BrainCollision(brain.ActiveHitbox());
             }
 
             // Reload and animation logic

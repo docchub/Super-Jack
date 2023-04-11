@@ -59,6 +59,8 @@ public class Brain : Agent
 
     protected override void AgentUpdate()
     {
+        superJack.brainExists = true;
+
         // Play braineater music on death
         if (!brainDead && Health == 0)
         {
