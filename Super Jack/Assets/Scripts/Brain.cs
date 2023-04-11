@@ -64,6 +64,10 @@ public class Brain : Agent
         // Play braineater music on death
         if (!brainDead && Health == 0)
         {
+            // Jitter until end of game
+            StartCoroutine(EndlessDamage());
+
+            // Music
             brainDead = true;
             bgMusic.clip = brainEater;
             bgMusic.loop = true;
@@ -170,12 +174,12 @@ public class Brain : Agent
 
             for (int i = 0; i < 3; i++)
             {
-                spriteRenderer.transform.position = new Vector3(Random.Range(-1f, 1f), Random.Range(-0.2f, 0.2f));
+                spriteRenderer.transform.position = new Vector3(Random.Range(-1f, 1f), Random.Range(-0.3f, 0.3f));
                 brainColor.a = 0.7f;
                 gameObject.GetComponent<SpriteRenderer>().color = brainColor;
                 yield return new WaitForSeconds(flickerTime);
 
-                spriteRenderer.transform.position = new Vector3(Random.Range(-1f, 1f), Random.Range(-0.2f, 0.2f));
+                spriteRenderer.transform.position = new Vector3(Random.Range(-1f, 1f), Random.Range(-0.3f, 0.3f));
                 brainColor.a = 1f;
                 gameObject.GetComponent<SpriteRenderer>().color = brainColor;
                 yield return new WaitForSeconds(flickerTime);
@@ -186,5 +190,21 @@ public class Brain : Agent
         }
 
         StopCoroutine(DamageEffect());
+    }
+
+    IEnumerator EndlessDamage()
+    {
+        while (true)
+        {
+            spriteRenderer.transform.position = new Vector3(Random.Range(-0.6f, 0.6f), Random.Range(-0.2f, 0.2f));
+            brainColor.a = 0.7f;
+            gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+            yield return new WaitForSeconds(flickerTime);
+
+            spriteRenderer.transform.position = new Vector3(Random.Range(-0.6f, 0.6f), Random.Range(-0.2f, 0.2f));
+            brainColor.a = 1f;
+            gameObject.GetComponent<SpriteRenderer>().color = brainColor;
+            yield return new WaitForSeconds(flickerTime);
+        }
     }
 }
