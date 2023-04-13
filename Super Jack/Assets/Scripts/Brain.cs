@@ -74,6 +74,16 @@ public class Brain : Agent
             bgMusic.Play();
         }
 
+        // Player sprite overlap
+        if (superJack.Position.y < -1.35)
+        {
+            spriteRenderer.sortingOrder = 0;
+        }
+        else
+        {
+            spriteRenderer.sortingOrder = 2;
+        }
+
         // Sprite manager
         prevSprite = spriteRenderer.sprite;
         if (Health <= 4 * healthIntervals && Health > 3 * healthIntervals)

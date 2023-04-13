@@ -11,9 +11,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: brainHitBox3
       objectReference: {fileID: 0}
+    - target: {fileID: 2450247149237408122, guid: 9c370ba9ae5f0aa4fa7e86bb83030b36, type: 3}
+      propertyPath: m_Name
+      value: brainHitBox3 Variant
+      objectReference: {fileID: 0}
     - target: {fileID: 3806437971132085974, guid: 9c370ba9ae5f0aa4fa7e86bb83030b36, type: 3}
       propertyPath: m_Color.a
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990958403851688644, guid: 9c370ba9ae5f0aa4fa7e86bb83030b36, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990958403851688644, guid: 9c370ba9ae5f0aa4fa7e86bb83030b36, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990958403851688644, guid: 9c370ba9ae5f0aa4fa7e86bb83030b36, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990958403851688644, guid: 9c370ba9ae5f0aa4fa7e86bb83030b36, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: 8280999127604475228, guid: 9c370ba9ae5f0aa4fa7e86bb83030b36, type: 3}
       propertyPath: m_RootOrder
