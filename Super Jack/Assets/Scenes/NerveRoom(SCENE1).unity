@@ -694,6 +694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 3899062068849673018, guid: 10a6c8b0966c5b3448cc5118da4201c5, type: 3}
+  normalJackPrefab: {fileID: 0}
   nervePrefab: {fileID: 8476152306766458665, guid: a3ff5ade7d990714e82bbc4564893f9e, type: 3}
   brainPrefab: {fileID: 0}
   doorPrefab1: {fileID: 437845339922612402, guid: 4f8a28eefa71a4f4698053bf59c248e6, type: 3}
@@ -706,6 +707,7 @@ MonoBehaviour:
   - {x: 2, y: 3.2}
   - {x: 4, y: -3}
   playerStartPos: {x: -4, y: -3}
+  nJackPos: {x: 0, y: 2.31}
   keyPos: {x: -3.7, y: 3.7}
   roomNumber: 1
 --- !u!4 &1252005954

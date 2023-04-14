@@ -36,7 +36,7 @@ public class AgentManager : MonoBehaviour
     List<Vector2> nervePosList;
 
     [SerializeField]
-    Vector2 playerStartPos = new Vector2(-4, -3);
+    public Vector2 playerStartPos = new Vector2(-4, -3);
 
     [SerializeField]
     Vector2 nJackPos = new Vector2(0.0f, 2.31f);
