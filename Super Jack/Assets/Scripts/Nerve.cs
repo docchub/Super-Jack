@@ -60,7 +60,7 @@ public class Nerve : Agent
             totalSteeringForce += Separation();
 
             // Player collision
-            if (BoxCollisions(gameObject, superJack.gameObject) && !onCooldown)
+            if (BoxCollisions(gameObject, superJack.gameObject) && !onCooldown && Health > 0)
             {
                 superJack.Hurt();
                 onCooldown = true;

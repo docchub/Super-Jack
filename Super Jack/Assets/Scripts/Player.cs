@@ -356,8 +356,6 @@ public class Player : Agent
 
     void GameOver()
     {
-        // Implement death sound + pause
-
         SceneManager.LoadScene(6);
     }
 
